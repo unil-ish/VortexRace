@@ -49,7 +49,6 @@ if __name__ == '__main__':
         # Code à exécuter après la connexion réussie
         st.write("Bienvenue sur votre page d'accueil !")
 
-
 df = pd.DataFrame({
     'Temps': [1, 2, 3, 4, 5],
     'Distance': [10, 20, 30, 40, 50]
