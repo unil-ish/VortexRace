@@ -1,67 +1,18 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import streamlit as st
-# Créer un dictionnaire avec les informations d'identification
-users = {
-        "utilisateur1": "motdepasse1",
-        "utilisateur2": "motdepasse2",
-        "utilisateur3": "motdepasse3"
-}
+import extra_streamlit_components as stx
 
-def login():
-    """Fonction de connexion"""
-
-    # Afficher le formulaire de connexion
-    username = st.text_input("Nom d'utilisateur", key='username_input1')
-    password = st.text_input("Mot de passe", key='mdp_input1', type="password")
-
-    if st.button("Se connecter"):
-        # Vérifier les identifiants
-        if username in users and password == users[username]:
-            st.success("Vous êtes connecté !")
-            return True
-        else:
-            st.error("Nom d'utilisateur ou mot de passe incorrect")
-            return False
-
-def create_account():
-    """Fonction de création de compte"""
-    # Afficher le formulaire de création de compte
-    new_username = st.text_input("Nom d'utilisateur", key='username_input2')
-    new_password = st.text_input("Mot de passe", key='mdp_input2', type="password")
-
-    if st.button("Créer un compte"):
-        # Ajouter les nouvelles informations d'identification au dictionnaire
-        users[new_username] = new_password
-        st.success("Votre compte a été créé ! Connectez-vous avec vos nouveaux identifiants.")
-        return True
-
-if __name__ == '__main__':
-    st.set_page_config(page_title="Page de connexion")
-
-    st.title("Bienvenue sur la page de connexion")
-
-    choix = st.radio("Que voulez-vous faire ?", ("Créer un compte", "Se connecter"))
-
-    if choix == "Créer un compte":
-        create_account()
-        st.write("Vous pouvez maintenant vous connecter.")
-    else:
-        login()
-        st.write("Bienvenue sur votre page d'accueil !")
-
-df = pd.DataFrame({
-    'Temps': [1, 2, 3, 4, 5],
-    'Distance': [10, 20, 30, 40, 50]
-})
-df['Temps moyen'] = df['Distance'] / df['Temps']
-fig, ax = plt.subplots()
-ax.plot(df['Temps moyen'], df['Temps'])
-ax.set_xlabel('Distance (km)')
-ax.set_ylabel('Temps moyen (min/km)')
-
-st.image('/Users/thomasrywalski/Desktop/images.png', width=100, caption='Logo Vortex Race')
+image1 = st.image('/Users/thomasrywalski/Desktop/images.png', width=150, caption='Logo Vortex Race')
+#stx.bouncing_image(image_source=image1, animate=True, animation_time=1500, height=100, width=300)
 st.title('Vortex Race')
+
+chosen_id = stx.tab_bar(data=[
+    stx.TabBarItemData(id=1, title="Profil", description="Mes informatins"),
+    stx.TabBarItemData(id=2, title="Statistiques", description="Mes courses"),
+    stx.TabBarItemData(id=3, title="Médiathèque", description="Les vidéos"),
+], default=1)
+st.info(f"{chosen_id=}")
 
 col1, col2, col3 = st.columns(3)
 col1.header('Profil')
@@ -83,13 +34,13 @@ with col1.expander("Lire la suite"):
     """)
 
 col2.header('Mes statistiques')
-st.pyplot(fig)
+val = stx.stepper_bar(steps=["Ready", "Get Set", "Go"])
+st.info(f"Phase #{val}")
 
 col3.header('Médiathèque')
 col3.checkbox('Vidéos')
 col3.checkbox('Mes vidéos')
 
-st.text_area('Bonjour')
-
+#st.text_area('Bonjour')
 #st.text_input()
 #st.slider()
