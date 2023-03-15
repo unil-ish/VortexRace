@@ -19,8 +19,12 @@ username = input("Enter a username: ")
 password = input("Enter a password: ")
 
 # Insert the user's login information into the database
-c.execute("INSERT INTO login (username, password) VALUES (?, ?)", (username, password))
-conn.commit()
+# Check if username is already taken
+if ValueError:
+    print("Oops this username is already taken. Be more original...")
+else:
+    c.execute("INSERT INTO login (username, password) VALUES (?, ?)", (username, password))
+    conn.commit()
 
 # Close the database connection
 conn.close()
