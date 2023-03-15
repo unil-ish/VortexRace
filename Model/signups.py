@@ -3,7 +3,7 @@
 import sqlite3
 
 # Connect to the database
-conn = sqlite3.connect("login.db")
+conn = sqlite3.connect("../Visual/app/login.db")
 c = conn.cursor()
 
 # Prompt the user to enter a username and password
