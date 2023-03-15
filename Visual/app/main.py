@@ -1,7 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import streamlit as st
-
 # Créer un dictionnaire avec les informations d'identification
 users = {
         "utilisateur1": "motdepasse1",
@@ -40,13 +39,15 @@ def create_account():
 if __name__ == '__main__':
     st.set_page_config(page_title="Page de connexion")
 
-    st.title("Connectez-vous")
+    st.title("Bienvenue sur la page de connexion")
 
-    if create_account():
-        st.info("Connectez-vous avec vos nouveaux identifiants.")
+    choix = st.radio("Que voulez-vous faire ?", ("Créer un compte", "Se connecter"))
 
-    if login():
-        # Code à exécuter après la connexion réussie
+    if choix == "Créer un compte":
+        create_account()
+        st.write("Vous pouvez maintenant vous connecter.")
+    else:
+        login()
         st.write("Bienvenue sur votre page d'accueil !")
 
 df = pd.DataFrame({
@@ -80,7 +81,6 @@ with col1.expander("Lire la suite"):
         Donec eu lectus eget quam luctus viverra in sed odio. 
         Suspendisse vehicula metus quis molestie commodo.
     """)
-
 
 col2.header('Mes statistiques')
 st.pyplot(fig)
