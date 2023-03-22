@@ -1,5 +1,9 @@
+import subprocess
+
 import streamlit as st
+import subprocess
 from streamlit_login_auth_ui.widgets import __login__
+import main
 
 __login__obj = __login__(auth_token = "courier_auth_token", 
                     company_name = "Shims",
@@ -12,5 +16,5 @@ __login__obj = __login__(auth_token = "courier_auth_token",
 LOGGED_IN = __login__obj.build_login_ui()
 
 if st.session_state['LOGGED_IN'] == True:
-
-    st.markdown("Your Streamlit Application Begins here!")
+    main.main()
+    #st.markdown("Your Streamlit Application Begins here!")
