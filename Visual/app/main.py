@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 import streamlit as st
 import extra_streamlit_components as stx
 
+st.set_page_config(layout="wide")
+
 with open('Visual/app/style.css') as f :
     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
