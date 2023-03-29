@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 import streamlit as st
 import extra_streamlit_components as stx
 
+with open('style.css') as f :
+    st.markdown(f'<style>{f.read()}</style>',unsafe_allow_html=True)
 #image1 = st.image('/Users/thomasrywalski/Desktop/images.png', width=150, caption='Logo Vortex Race')
 #stx.bouncing_image(image_source=image1, animate=True, animation_time=1500, height=100, width=300)
 def main():
