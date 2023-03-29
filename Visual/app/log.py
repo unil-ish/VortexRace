@@ -12,7 +12,7 @@ __login__obj = __login__(auth_token = "courier_auth_token",
                     hide_footer_bool = False, 
                     #lottie_url = 'https://assets8.lottiefiles.com/packages/lf20_ktwnwv5m.json'
                     )
-__login__obj.
+__login__obj
 LOGGED_IN = __login__obj.build_login_ui()
 
 if st.session_state['LOGGED_IN'] == True:
