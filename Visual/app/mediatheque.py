@@ -39,7 +39,7 @@ def mediatheque():
             st.write(f'[Regarder sur YouTube](https://www.youtube.com/watch?v={video_id})')
 
         except Exception as e:
-            st.error('Une erreur est survenue lors de l\'extraction de la vidéo: {}'.format(str(e)))
+            st.error('Une erreur est survenue lors de l\'extraction de la vidéo: Nous n\'acceptons que les vidéos Youtube. Il est possible que votre lien soit obsolète.')
 
     # Afficher la liste des vidéos dans la base de données
     c.execute("SELECT * FROM videos")
