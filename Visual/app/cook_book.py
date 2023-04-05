@@ -45,11 +45,6 @@ def cook_book():
         col1, col2, col3 = st.columns(3)
         col2.header('Mes statistiques')
         val = stx.stepper_bar(steps=["Ready", "Get Set", "Go"])
-        st.info(f"Phase #{val}")
-
-        col3.header('Médiathèque')
-        col3.checkbox('Vidéos')
-        col3.checkbox('Mes vidéos')
 
     if chosen_id == "3":
         mediatheque.mediatheque()
