@@ -20,10 +20,8 @@ def cook_book():
         stx.TabBarItemData(id=3, title="Médiathèque", description="Les vidéos"),
     ], default=1)
     st.info(f"{chosen_id=}")
-    if chosen_id == "3":
-        mediatheque.mediatheque()
 
-    else:
+    if chosen_id == "1":
         col1, col2, col3 = st.columns(3)
         col1.header('Profil')
         col1.checkbox('Prénom')
@@ -33,17 +31,19 @@ def cook_book():
         age = col1.slider("Age", 16, 100)
         with col1.expander("Lire la suite"):
             st.write("""
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                Mauris commodo augue ut dui malesuada, vel posuere neque tempus. 
-                Vestibulum ut augue volutpat, gravida arcu in, eleifend nulla. 
-                Praesent rhoncus tellus vel nunc auctor, non maximus dolor interdum. 
-                Pellentesque quis vestibulum nisl. Sed blandit semper massa. 
-                Etiam consequat urna id fermentum aliquet. 
-                Integer mattis ligula sed nibh malesuada, at posuere magna bibendum. 
-                Donec eu lectus eget quam luctus viverra in sed odio. 
-                Suspendisse vehicula metus quis molestie commodo.
-            """)
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                        Mauris commodo augue ut dui malesuada, vel posuere neque tempus. 
+                        Vestibulum ut augue volutpat, gravida arcu in, eleifend nulla. 
+                        Praesent rhoncus tellus vel nunc auctor, non maximus dolor interdum. 
+                        Pellentesque quis vestibulum nisl. Sed blandit semper massa. 
+                        Etiam consequat urna id fermentum aliquet. 
+                        Integer mattis ligula sed nibh malesuada, at posuere magna bibendum. 
+                        Donec eu lectus eget quam luctus viverra in sed odio. 
+                        Suspendisse vehicula metus quis molestie commodo.
+                    """)
 
+    if chosen_id == "2":
+        col1, col2, col3 = st.columns(3)
         col2.header('Mes statistiques')
         val = stx.stepper_bar(steps=["Ready", "Get Set", "Go"])
         st.info(f"Phase #{val}")
@@ -51,6 +51,9 @@ def cook_book():
         col3.header('Médiathèque')
         col3.checkbox('Vidéos')
         col3.checkbox('Mes vidéos')
+
+    if chosen_id == "3":
+        mediatheque.mediatheque()
 
         #st.text_area('Bonjour')
         #st.text_input()
