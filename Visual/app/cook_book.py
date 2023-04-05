@@ -19,7 +19,6 @@ def cook_book():
         stx.TabBarItemData(id=2, title="Statistiques", description="Mes courses"),
         stx.TabBarItemData(id=3, title="Médiathèque", description="Les vidéos"),
     ], default=1)
-    st.info(f"{chosen_id=}")
 
     if chosen_id == "1":
         col1, col2, col3 = st.columns(3)
