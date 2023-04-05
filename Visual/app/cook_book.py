@@ -10,7 +10,7 @@ with open('Visual/app/style.css') as f :
 
 #image1 = st.image('/Users/thomasrywalski/Desktop/images.png', width=150, caption='Logo Vortex Race')
 #stx.bouncing_image(image_source=image1, animate=True, animation_time=1500, height=100, width=300)
-def main():
+def cook_book():
     st.title('Vortex Race')
 
     chosen_id = stx.tab_bar(data=[
@@ -52,4 +52,4 @@ def main():
     #st.text_input()
     #st.slider()
 
-main()
+cook_book()

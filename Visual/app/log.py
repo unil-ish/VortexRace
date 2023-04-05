@@ -16,5 +16,5 @@ __login__obj
 LOGGED_IN = __login__obj.build_login_ui()
 
 if st.session_state['LOGGED_IN'] == True:
-    main.main()
+    cook_book.cook_book()
     #st.markdown("Your Streamlit Application Begins here!")
