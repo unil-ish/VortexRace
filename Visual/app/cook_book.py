@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import streamlit as st
 import extra_streamlit_components as stx
+import mediatheque
 
 st.set_page_config(layout="wide")
 
