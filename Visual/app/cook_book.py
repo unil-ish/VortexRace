@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import streamlit as st
 import extra_streamlit_components as stx
-import mediatheque_test
+import mediatheque
 
 st.set_page_config(layout="wide")
 
@@ -21,7 +21,7 @@ def cook_book():
     ], default=1)
     st.info(f"{chosen_id=}")
     if chosen_id == "3":
-        mediatheque_test.mediatheque()
+        mediatheque.mediatheque()
 
     else:
         col1, col2, col3 = st.columns(3)
