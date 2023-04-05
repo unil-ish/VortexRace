@@ -45,7 +45,7 @@ def mediatheque():
     c.execute("SELECT * FROM videos")
     rows = c.fetchall()
     st.write('### Liste des vidéos:')
-    for row in rows:
+    for row in reversed(rows):
         st.write(f' <iframe width="560" height="315" src="https://www.youtube.com/embed/{row[2]}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>', unsafe_allow_html=True)
         st.write("")
 
