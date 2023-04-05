@@ -3,8 +3,6 @@ import sqlite3
 from pytube import YouTube
 
 def mediatheque():
-    st.set_page_config(layout="wide")
-
     # Se connecter à la base de données
     conn = sqlite3.connect('videos.db')
     c = conn.cursor()
