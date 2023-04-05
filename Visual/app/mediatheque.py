@@ -46,6 +46,7 @@ def mediatheque():
     rows = c.fetchall()
     st.write('### Liste des vidéos:')
     for row in rows:
-        st.write(f'- {row[1]} ([Regarder sur YouTube](https://www.youtube.com/watch?v={row[2]}))')
+        st.write(f' <iframe width="560" height="315" src="https://www.youtube.com/embed/{row[2]}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>', unsafe_allow_html=True)
+        st.write("")
 
 mediatheque()
