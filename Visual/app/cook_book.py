@@ -49,10 +49,14 @@ def cook_book():
         c.execute("SELECT * FROM favorites")
         rows = c.fetchall()
         st.write('### Liste des favoris:')
-        for row in reversed(rows):
+        for i, row in enumerate(reversed(rows)):
             st.write(
                 f'<iframe width="560" height="315" src="https://www.youtube.com/embed/{row[2]}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>',
                 unsafe_allow_html=True)
+            if st.button(f"Retirer des favoris", key=f"add-to-favorites-{i}"):
+                # Retirer la vidéo à la liste des favoris
+                c.execute("DELETE FROM favorites WHERE video_id = ?", (row[2],))
+                conn.commit()
             st.write("")
 
     if chosen_id == "2":
