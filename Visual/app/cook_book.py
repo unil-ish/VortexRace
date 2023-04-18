@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import streamlit as st
 import extra_streamlit_components as stx
+import sqlite3
 import mediatheque
 
 st.set_page_config(layout="wide")
@@ -40,6 +41,19 @@ def cook_book():
                         Donec eu lectus eget quam luctus viverra in sed odio. 
                         Suspendisse vehicula metus quis molestie commodo.
                     """)
+
+        # Afficher la liste des favoris
+        favorites = mediatheque.get_favorites()
+        conn = sqlite3.connect("videos.db")
+        c = conn.cursor()
+        c.execute("SELECT * FROM favorites")
+        rows = c.fetchall()
+        st.write('### Liste des favoris:')
+        for row in reversed(rows):
+            st.write(
+                f'<iframe width="560" height="315" src="https://www.youtube.com/embed/{row[2]}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>',
+                unsafe_allow_html=True)
+            st.write("")
 
     if chosen_id == "2":
         col1, col2, col3 = st.columns(3)

@@ -60,4 +60,13 @@ def mediatheque():
             conn.commit()
         st.write("")
 
+#Récupérer la table favorites pour l'afficher dans cook book
+def get_favorites():
+    conn = sqlite3.connect("videos.db")
+    c = conn.cursor()
+    c.execute("SELECT * FROM favorites")
+    favorites = c.fetchall()
+    conn.close()
+    return favorites
+
 mediatheque()
