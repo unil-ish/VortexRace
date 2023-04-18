@@ -12,6 +12,11 @@ def mediatheque():
                  (url text, title text, video_id text)''')
     conn.commit()
 
+    # Créer la table pour stocker les informations de la vidéo
+    c.execute('''CREATE TABLE IF NOT EXISTS favorites
+                     (title text, author text, video_id text)''')
+    conn.commit()
+
     # Demander à l'utilisateur de saisir une URL YouTube
     url = st.text_input('Entrez l\'URL de la vidéo YouTube:')
 
