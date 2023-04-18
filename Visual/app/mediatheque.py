@@ -58,6 +58,8 @@ def mediatheque():
             # Ajouter la vidéo à la liste des favoris
             c.execute("INSERT INTO favorites VALUES (?, ?, ?)", (row[0], row[1], row[2]))
             conn.commit()
+            st.write("**La vidéo a bien été ajoutée à vos favoris!**", unsafe_allow_html=True,
+                     key=f"added-to-favorites-{i}")
         st.write("")
 
 #Récupérer la table favorites pour l'afficher dans cook book
