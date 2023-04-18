@@ -45,8 +45,12 @@ def mediatheque():
     c.execute("SELECT * FROM videos")
     rows = c.fetchall()
     st.write('### Liste des vidéos:')
-    for row in reversed(rows):
+    for i, row in enumerate(reversed(rows)):
         st.write(f' <iframe width="560" height="315" src="https://www.youtube.com/embed/{row[2]}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>', unsafe_allow_html=True)
+        if st.button(f"Add to favorites {i}"):
+            # Ajouter la vidéo à la liste des favoris
+            c.execute("INSERT INTO favorites VALUES (?, ?, ?)", (row[0], row[1], row[2]))
+            conn.commit()
         st.write("")
 
 mediatheque()
