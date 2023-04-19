@@ -5,7 +5,7 @@ import extra_streamlit_components as stx
 import sqlite3
 import mediatheque
 
-with open('Visual/app/static/style.css') as f :
+with open('Visual/app/style.css') as f :
     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
 #image1 = st.image('/Users/thomasrywalski/Desktop/images.png', width=150, caption='Logo Vortex Race')
