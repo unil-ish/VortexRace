@@ -58,6 +58,11 @@ def mediatheque():
             f'<iframe width="560" height="315" src="https://www.youtube.com/embed/{row[2]}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>',
             unsafe_allow_html=True)
 
+        #Ne marche pas comme ça -> faire colonnes de plus dans video.db, nommées like et dislike,
+        #et récupérer ces valeurs pour les afficher
+        like = 0
+        dislike = 0
+
         col_fav, col_like, col_dislike, col4 = st.columns([2, 2, 2, 8])
 
         with col_fav:
@@ -68,17 +73,19 @@ def mediatheque():
                 st.write("**La vidéo a bien été ajoutée à vos favoris!**", unsafe_allow_html=True)
 
         with col_like:
+            st.write(like)
             if st.button(f"\U0001F44D", key=f"like-{i}"):
                 # Ajouter un like à la vidéo
-                #c.execute("INSERT INTO favorites VALUES (?, ?, ?)", (row[0], row[1], row[2]))
-                #conn.commit()
+                like += 1
                 st.write("**+1**", unsafe_allow_html=True)
+                st.experimental_rerun()
 
         with col_dislike:
+            st.write(dislike)
             if st.button(f"\U0001F44E", key=f"dislike-{i}"):
-                # Ajouter un like à la vidéo
-                #c.execute("INSERT INTO favorites VALUES (?, ?, ?)", (row[0], row[1], row[2]))
-                #conn.commit()
+                # Ajouter un dislike à la vidéo
+                dislike += 1
                 st.write("**-1**", unsafe_allow_html=True)
+                st.experimental_rerun()
 
 mediatheque()
