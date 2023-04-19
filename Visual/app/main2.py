@@ -1,8 +1,12 @@
 import streamlit as st
 import extra_streamlit_components as stx
-from flask import Flask, render_template
+import streamlit.components.v1 as components
 
-app = Flask(__name__)
-@app.route('/')
-def home():
-    return render_template('index.html')
+with open('./Visual/app/style.css') as f :
+    st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+HtmlFile = open("./Visual/app/index.html", 'r', encoding='utf-8')
+source_code = HtmlFile.read()
+#components.html(source_code)
+st.markdown(source_code,unsafe_allow_html=True)
+
+
