@@ -61,16 +61,12 @@ def mediatheque():
             # Ajouter la vidéo à la liste des favoris
             c.execute("INSERT INTO favorites VALUES (?, ?, ?)", (row[0], row[1], row[2]))
             conn.commit()
-            st.write("**La vidéo a bien été ajoutée à vos favoris!**", unsafe_allow_html=True,
-                     key=f"added-to-favorites-{i}")
-        st.write("")
+            st.write("**La vidéo a bien été ajoutée à vos favoris!**", unsafe_allow_html=True)
 
         if st.button(f"\U0001F44D", key=f"like-{i}"):
             # Ajouter un like à la vidéo
             #c.execute("INSERT INTO favorites VALUES (?, ?, ?)", (row[0], row[1], row[2]))
             #conn.commit()
-            st.write("**+1**", unsafe_allow_html=True,
-                     key=f"like-{i}")
-        st.write("")
+            st.write("**+1**", unsafe_allow_html=True)
 
 mediatheque()

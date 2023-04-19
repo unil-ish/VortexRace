@@ -55,8 +55,6 @@ def main():
                     # Rafraîchir la page
                     st.experimental_rerun()
 
-                st.write("")
-
     if chosen_id == "2":
         col1, col2, col3 = st.columns(3)
         col2.header('Mes statistiques')
