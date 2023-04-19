@@ -52,21 +52,33 @@ def mediatheque():
     st.write('### Liste des vidéos:')
 
     #Boutons sous la vidéo
-    col_fav, col_like = st.beta_columns(2)
+
     for i, row in enumerate(reversed(rows)):
         st.write(
             f'<iframe width="560" height="315" src="https://www.youtube.com/embed/{row[2]}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>',
             unsafe_allow_html=True)
-        if st.button(f"\u2605", key=f"add-to-favorites-{i}"):
-            # Ajouter la vidéo à la liste des favoris
-            c.execute("INSERT INTO favorites VALUES (?, ?, ?)", (row[0], row[1], row[2]))
-            conn.commit()
-            st.write("**La vidéo a bien été ajoutée à vos favoris!**", unsafe_allow_html=True)
 
-        if st.button(f"\U0001F44D", key=f"like-{i}"):
-            # Ajouter un like à la vidéo
-            #c.execute("INSERT INTO favorites VALUES (?, ?, ?)", (row[0], row[1], row[2]))
-            #conn.commit()
-            st.write("**+1**", unsafe_allow_html=True)
+        col_fav, col_like, col_dislike, col4 = st.columns([2, 2, 2, 8])
+
+        with col_fav:
+            if st.button(f"\u2605", key=f"add-to-favorites-{i}"):
+                # Ajouter la vidéo à la liste des favoris
+                c.execute("INSERT INTO favorites VALUES (?, ?, ?)", (row[0], row[1], row[2]))
+                conn.commit()
+                st.write("**La vidéo a bien été ajoutée à vos favoris!**", unsafe_allow_html=True)
+
+        with col_like:
+            if st.button(f"\U0001F44D", key=f"like-{i}"):
+                # Ajouter un like à la vidéo
+                #c.execute("INSERT INTO favorites VALUES (?, ?, ?)", (row[0], row[1], row[2]))
+                #conn.commit()
+                st.write("**+1**", unsafe_allow_html=True)
+
+        with col_dislike:
+            if st.button(f"\U0001F44E", key=f"dislike-{i}"):
+                # Ajouter un like à la vidéo
+                #c.execute("INSERT INTO favorites VALUES (?, ?, ?)", (row[0], row[1], row[2]))
+                #conn.commit()
+                st.write("**-1**", unsafe_allow_html=True)
 
 mediatheque()
