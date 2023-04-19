@@ -39,7 +39,6 @@ def main():
                                 """)
         with col3:
             # Afficher la liste des favoris
-            favorites = mediatheque.get_favorites()
             conn = sqlite3.connect("videos.db")
             c = conn.cursor()
             c.execute("SELECT * FROM favorites")

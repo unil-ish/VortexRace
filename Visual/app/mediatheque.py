@@ -50,6 +50,9 @@ def mediatheque():
     c.execute("SELECT * FROM videos")
     rows = c.fetchall()
     st.write('### Liste des vidéos:')
+
+    #Boutons sous la vidéo
+    col_fav, col_like = st.beta_columns(2)
     for i, row in enumerate(reversed(rows)):
         st.write(
             f'<iframe width="560" height="315" src="https://www.youtube.com/embed/{row[2]}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>',
@@ -62,13 +65,12 @@ def mediatheque():
                      key=f"added-to-favorites-{i}")
         st.write("")
 
-#Récupérer la table favorites pour l'afficher dans cook book
-def get_favorites():
-    conn = sqlite3.connect("videos.db")
-    c = conn.cursor()
-    c.execute("SELECT * FROM favorites")
-    favorites = c.fetchall()
-    conn.close()
-    return favorites
+        if st.button(f"\U0001F44D", key=f"like-{i}"):
+            # Ajouter un like à la vidéo
+            #c.execute("INSERT INTO favorites VALUES (?, ?, ?)", (row[0], row[1], row[2]))
+            #conn.commit()
+            st.write("**+1**", unsafe_allow_html=True,
+                     key=f"like-{i}")
+        st.write("")
 
 mediatheque()
