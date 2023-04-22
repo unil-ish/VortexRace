@@ -9,7 +9,7 @@ def mediatheque():
 
     # Créer la table pour stocker les informations de la vidéo
     c.execute('''CREATE TABLE IF NOT EXISTS videos
-                 (url text, title text, video_id text)''')
+                 (url text, title text, video_id text, likes integer NOT NULL DEFAULT 0, dislikes integer NOT NULL DEFAULT 0)''')
     conn.commit()
 
     # Créer la table pour stocker les informations de la vidéo
@@ -31,9 +31,11 @@ def mediatheque():
             video = YouTube(url)
             title = video.title
             video_id = video.video_id
+            likes = 0
+            dislikes = 0
 
             # Stocker les informations de la vidéo dans la base de données
-            c.execute("INSERT INTO videos VALUES (?, ?, ?)", (url, title, video_id))
+            c.execute("INSERT INTO videos VALUES (?, ?, ?, ?, ?)", (url, title, video_id, likes, dislikes))
             conn.commit()
 
             # Afficher la vidéo dans un IFrame
@@ -47,21 +49,23 @@ def mediatheque():
             st.error('Une erreur est survenue lors de l\'extraction de la vidéo: Nous n\'acceptons que les vidéos Youtube. Il est possible que votre lien soit obsolète.')
 
     # Afficher la liste des vidéos dans la base de données
-    c.execute("SELECT * FROM videos")
+    c.execute("SELECT url, title, video_id, likes, dislikes FROM videos")
     rows = c.fetchall()
     st.write('### Liste des vidéos:')
 
     #Boutons sous la vidéo
 
     for i, row in enumerate(reversed(rows)):
+        # Extraire les informations de la vidéo
+        url = row[0]
+        title = row[1]
+        video_id = row[2]
+        likes = row[3]
+        dislikes = row[4]
+
         st.write(
             f'<iframe width="560" height="315" src="https://www.youtube.com/embed/{row[2]}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>',
             unsafe_allow_html=True)
-
-        #Ne marche pas comme ça -> faire colonnes de plus dans video.db, nommées like et dislike,
-        #et récupérer ces valeurs pour les afficher
-        like = 0
-        dislike = 0
 
         col_fav, col_like, col_dislike, col4 = st.columns([2, 2, 2, 8])
 
@@ -73,19 +77,27 @@ def mediatheque():
                 st.write("**La vidéo a bien été ajoutée à vos favoris!**", unsafe_allow_html=True)
 
         with col_like:
-            st.write(like)
+            c.execute("SELECT likes FROM videos WHERE video_id = ?", (video_id,))
+            result = c.fetchone()
+            if result is not None:
+                likes = result
+                st.write(f'Likes : {likes}')
             if st.button(f"\U0001F44D", key=f"like-{i}"):
                 # Ajouter un like à la vidéo
-                like += 1
-                st.write("**+1**", unsafe_allow_html=True)
+                c.execute("UPDATE videos SET likes = likes + 1 WHERE video_id = ?", (video_id,))
+                conn.commit()
                 st.experimental_rerun()
 
         with col_dislike:
-            st.write(dislike)
+            c.execute("SELECT dislikes FROM videos WHERE video_id = ?", (video_id,))
+            result = c.fetchone()
+            if result is not None:
+                dislikes = result
+                st.write(f'Dislikes : {dislikes}')
             if st.button(f"\U0001F44E", key=f"dislike-{i}"):
                 # Ajouter un dislike à la vidéo
-                dislike += 1
-                st.write("**-1**", unsafe_allow_html=True)
+                c.execute("UPDATE videos SET dislikes = dislikes + 1 WHERE video_id = ?", (video_id,))
+                conn.commit()
                 st.experimental_rerun()
 
 mediatheque()
