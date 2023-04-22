@@ -80,7 +80,7 @@ def mediatheque():
             c.execute("SELECT likes FROM videos WHERE video_id = ?", (video_id,))
             result = c.fetchone()
             if result is not None:
-                likes = result
+                likes = result[0]
                 st.write(f'Likes : {likes}')
             if st.button(f"\U0001F44D", key=f"like-{i}"):
                 # Ajouter un like à la vidéo
@@ -92,7 +92,7 @@ def mediatheque():
             c.execute("SELECT dislikes FROM videos WHERE video_id = ?", (video_id,))
             result = c.fetchone()
             if result is not None:
-                dislikes = result
+                dislikes = result[0]
                 st.write(f'Dislikes : {dislikes}')
             if st.button(f"\U0001F44E", key=f"dislike-{i}"):
                 # Ajouter un dislike à la vidéo
