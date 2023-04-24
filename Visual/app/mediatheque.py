@@ -54,7 +54,6 @@ def mediatheque():
     st.write('### Liste des vidéos:')
 
     #Boutons sous la vidéo
-
     for i, row in enumerate(reversed(rows)):
         # Extraire les informations de la vidéo
         url = row[0]
@@ -98,6 +97,14 @@ def mediatheque():
                 # Ajouter un dislike à la vidéo
                 c.execute("UPDATE videos SET dislikes = dislikes + 1 WHERE video_id = ?", (video_id,))
                 conn.commit()
+                st.experimental_rerun()
+
+        with col4:
+            if st.button(f"dev-btn: Retirer video", key=f"dev-btn-{i}"):
+                # Retirer la vidéo à la liste des favoris
+                c.execute("DELETE FROM videos WHERE video_id = ?", (video_id,))
+                conn.commit()
+                # Rafraîchir la page
                 st.experimental_rerun()
 
 mediatheque()
