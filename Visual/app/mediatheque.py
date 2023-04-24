@@ -47,6 +47,7 @@ def mediatheque():
 
         except Exception as e:
             st.error('Une erreur est survenue lors de l\'extraction de la vidéo: Nous n\'acceptons que les vidéos Youtube. Il est possible que votre lien soit obsolète.')
+            st.error("Si vous êtes sûr de votre lien YouTube, réessayez.")
 
     # Afficher la liste des vidéos dans la base de données
     c.execute("SELECT url, title, video_id, likes, dislikes, ABS(likes - dislikes) AS difference FROM videos ORDER BY difference DESC ")
