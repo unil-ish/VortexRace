@@ -49,12 +49,12 @@ def mediatheque():
             st.error('Une erreur est survenue lors de l\'extraction de la vidéo: Nous n\'acceptons que les vidéos Youtube. Il est possible que votre lien soit obsolète.')
 
     # Afficher la liste des vidéos dans la base de données
-    c.execute("SELECT url, title, video_id, likes, dislikes FROM videos")
+    c.execute("SELECT url, title, video_id, likes, dislikes, ABS(likes - dislikes) AS difference FROM videos ORDER BY difference DESC ")
     rows = c.fetchall()
     st.write('### Liste des vidéos:')
 
     #Boutons sous la vidéo
-    for i, row in enumerate(reversed(rows)):
+    for i, row in enumerate(rows):
         # Extraire les informations de la vidéo
         url = row[0]
         title = row[1]
