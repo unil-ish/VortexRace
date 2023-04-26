@@ -60,8 +60,8 @@ class __login__:
         Checks if the auth file (where the user info is stored) already exists.
         """
         file_names = []
-        for path in os.listdir('./'):
-            if os.path.isfile(os.path.join('./', path)):
+        for path in os.listdir('data/'):
+            if os.path.isfile(os.path.join('data/', path)):
                 file_names.append(path)
 
         present_files = []
