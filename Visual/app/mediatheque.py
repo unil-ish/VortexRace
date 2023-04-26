@@ -1,6 +1,15 @@
 import streamlit as st
 import sqlite3
 from pytube import YouTube
+"""
+from loginWidgetStolen import __login__
+
+myObject = __login__(auth_token = "courier_auth_token",
+                    company_name = "Shims",
+                    width = 200, height = 250,
+                    logout_button_name = 'Logout', hide_menu_bool = False,
+                    hide_footer_bool = False,)
+username = myObject.get_username()"""
 
 def mediatheque():
     # Se connecter à la base de données
@@ -9,10 +18,10 @@ def mediatheque():
 
     # Créer la table pour stocker les informations de la vidéo
     c.execute('''CREATE TABLE IF NOT EXISTS videos
-                 (url text, title text, video_id text, likes integer NOT NULL DEFAULT 0, dislikes integer NOT NULL DEFAULT 0)''')
+                 (url text, title text, video_id text, likes integer NOT NULL DEFAULT 0, dislikes integer NOT NULL DEFAULT 0, liked_by)''')
     conn.commit()
 
-    # Créer la table pour stocker les informations de la vidéo
+    # Créer la table pour stocker les vidéos favorites (doit être perso, une pour chaque user)
     c.execute('''CREATE TABLE IF NOT EXISTS favorites
                      (title text, author text, video_id text)''')
     conn.commit()
@@ -62,6 +71,7 @@ def mediatheque():
         video_id = row[2]
         likes = row[3]
         dislikes = row[4]
+        is_liked = row[5]
 
         st.write(
             f'<iframe width="560" height="315" src="https://www.youtube.com/embed/{row[2]}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>',
@@ -83,7 +93,11 @@ def mediatheque():
                 likes = result[0]
                 st.write(f'Likes : {likes}')
             if st.button(f"\U0001F44D", key=f"like-{i}"):
-                # Ajouter un like à la vidéo
+                # Ajouter un like à la vidéo et le username à liked_by
+                """
+                c.execute("UPDATE videos SET likes = likes + 1, liked_by = ? WHERE video_id = ?", (username, video_id,))
+                conn.commit()"""
+                # Ajouter un like (en attendant que le comm d'au dessus marche)
                 c.execute("UPDATE videos SET likes = likes + 1 WHERE video_id = ?", (video_id,))
                 conn.commit()
                 st.experimental_rerun()
