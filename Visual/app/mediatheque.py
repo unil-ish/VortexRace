@@ -50,7 +50,7 @@ def mediatheque():
             st.error("Si vous êtes sûr de votre lien YouTube, réessayez.")
 
     # Afficher la liste des vidéos dans la base de données
-    c.execute("SELECT url, title, video_id, likes, dislikes, ABS(likes - dislikes) AS difference FROM videos ORDER BY difference DESC ")
+    c.execute("SELECT url, title, video_id, likes, dislikes, (likes - dislikes) AS difference FROM videos ORDER BY difference DESC ")
     rows = c.fetchall()
     st.write('### Liste des vidéos:')
 
