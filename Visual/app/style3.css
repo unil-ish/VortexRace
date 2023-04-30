@@ -85,3 +85,9 @@
   height: 30px;
   border-radius: 50%;
 }
+
+.rectangle-interieur.agrandir {
+  width: 880px;
+  height: 600px;
+}
+
