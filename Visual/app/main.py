@@ -2,6 +2,12 @@ import streamlit as st
 import extra_streamlit_components as stx
 import sqlite3
 import mediatheque
+from streamlit_card import card
+from streamlit_extras.chart_container import chart_container
+from streamlit_extras.colored_header import colored_header
+from streamlit_extras.let_it_rain import rain
+from streamlit_extras.metric_cards import style_metric_cards
+
 
 st.set_page_config(page_title="Mes onglets", layout="wide")
 with open('Visual/app/style.css') as f :
@@ -9,6 +15,62 @@ with open('Visual/app/style.css') as f :
 
 def main():
     st.title('Vortex Race')
+    rain(
+        emoji="🌀",
+        font_size=54,
+        falling_speed=5,
+        animation_length="7s",
+    )
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        colored_header(
+            label="My profil",
+            description="All my profil informations",
+            color_name="blue-80",
+        )
+
+        card(
+            title="My profil",
+            text="",
+            image="profil.jpg",
+            url="https://www.google.com",
+        )
+    with col2:
+        colored_header(
+            label="My Statistics",
+            description="All your stats",
+            color_name="blue-80",
+        )
+
+        card(
+            title="My Statistics",
+            text="",
+            image="profil.jpg",
+            url="https://www.google.com",
+        )
+
+        col1, col2 = st.columns(2)
+        col1.metric(label="Course 1 [min]", value=12, delta=0)
+        col2.metric(label="Course 2 [min]", value=15, delta=+3)
+        style_metric_cards()
+
+    with col3:
+        colored_header(
+            label="Vortex Race",
+            description="The Vortex Race website",
+            color_name="blue-80",
+        )
+        card(
+            title="Vortex Race",
+            text="",
+            image="VortexRaceLogo.png",
+            url="https://www.vortexrace.ch",
+        )
+
+    #chart_data = _get_random_data()
+    #with chart_container(chart_data):
+        #st.write("Here's your stats")
+        #st.area_chart(chart_data)
 
     chosen_id = stx.tab_bar(data=[
         stx.TabBarItemData(id=1, title="Profil", description="Mes informations"),
@@ -17,26 +79,7 @@ def main():
     ], default=1)
 
     if chosen_id == "1":
-        col1, col2, col3 = st.columns([2, 1, 2])
-        with col1:
-            col1.header('Profil')
-            col1.checkbox('Prénom')
-            col1.checkbox('Nom')
-            col1.selectbox('Genre', ['Homme', 'Femme', 'Autres'])
-            col1.metric("Cool", "10/10")
-            age = col1.slider("Age", 16, 100)
-            with col1.expander("Lire la suite"):
-                st.write("""
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                                    Mauris commodo augue ut dui malesuada, vel posuere neque tempus. 
-                                    Vestibulum ut augue volutpat, gravida arcu in, eleifend nulla. 
-                                    Praesent rhoncus tellus vel nunc auctor, non maximus dolor interdum. 
-                                    Pellentesque quis vestibulum nisl. Sed blandit semper massa. 
-                                    Etiam consequat urna id fermentum aliquet. 
-                                    Integer mattis ligula sed nibh malesuada, at posuere magna bibendum. 
-                                    Donec eu lectus eget quam luctus viverra in sed odio. 
-                                    Suspendisse vehicula metus quis molestie commodo.
-                                """)
+        col1,col2,col3 = st.columns([2,1,2])
         with col3:
             # Afficher la liste des favoris
             conn = sqlite3.connect("videos.db")
