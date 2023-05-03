@@ -86,7 +86,6 @@ def main():
             col1, col2, col3 = st.columns([2, 1, 2])
             with col1:
                 col1.header("Bienvenue " + username + " !")
-
             with col3:
                 # Afficher la liste des favoris
                 conn = sqlite3.connect("videos.db")
