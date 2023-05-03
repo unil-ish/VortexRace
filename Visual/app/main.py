@@ -85,24 +85,8 @@ def main():
         if chosen_id == "1":
             col1, col2, col3 = st.columns([2, 1, 2])
             with col1:
-                col1.header(username)
-                col1.checkbox('Prénom')
-                col1.checkbox('Nom')
-                col1.selectbox('Genre', ['Homme', 'Femme', 'Autres'])
-                col1.metric("Cool", "10/10")
-                age = col1.slider("Age", 16, 100)
-                with col1.expander("Lire la suite"):
-                    st.write("""
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                                        Mauris commodo augue ut dui malesuada, vel posuere neque tempus. 
-                                        Vestibulum ut augue volutpat, gravida arcu in, eleifend nulla. 
-                                        Praesent rhoncus tellus vel nunc auctor, non maximus dolor interdum. 
-                                        Pellentesque quis vestibulum nisl. Sed blandit semper massa. 
-                                        Etiam consequat urna id fermentum aliquet. 
-                                        Integer mattis ligula sed nibh malesuada, at posuere magna bibendum. 
-                                        Donec eu lectus eget quam luctus viverra in sed odio. 
-                                        Suspendisse vehicula metus quis molestie commodo.
-                                    """)
+                col1.header("Bienvenue " + username + " !")
+
             with col3:
                 # Afficher la liste des favoris
                 conn = sqlite3.connect("videos.db")
