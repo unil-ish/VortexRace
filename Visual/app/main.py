@@ -3,6 +3,12 @@ import extra_streamlit_components as stx
 import sqlite3
 import mediatheque
 import logintests2
+from streamlit_card import card
+from streamlit_extras.chart_container import chart_container
+from streamlit_extras.colored_header import colored_header
+from streamlit_extras.let_it_rain import rain
+from streamlit_extras.metric_cards import style_metric_cards
+
 
 username = logintests2.get_logged_in_user()
 
@@ -13,6 +19,62 @@ with open('Visual/app/style.css') as f :
 def main():
     if username != '':
         st.title('Vortex Race')
+        rain(
+            emoji="🌀",
+            font_size=54,
+            falling_speed=5,
+            animation_length="7s",
+        )
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            colored_header(
+                label="My profil",
+                description="All my profil informations",
+                color_name="blue-80",
+            )
+
+            card(
+                title="My profil",
+                text="",
+                image="profil.jpg",
+                url="https://www.google.com",
+            )
+        with col2:
+            colored_header(
+                label="My Statistics",
+                description="All your stats",
+                color_name="blue-80",
+            )
+
+            card(
+                title="My Statistics",
+                text="",
+                image="profil.jpg",
+                url="https://www.google.com",
+            )
+
+            col1, col2 = st.columns(2)
+            col1.metric(label="Course 1 [min]", value=12, delta=0)
+            col2.metric(label="Course 2 [min]", value=15, delta=+3)
+            style_metric_cards()
+
+        with col3:
+            colored_header(
+                label="Vortex Race",
+                description="The Vortex Race website",
+                color_name="blue-80",
+            )
+            card(
+                title="Vortex Race",
+                text="",
+                image="VortexRaceLogo.png",
+                url="https://www.vortexrace.ch",
+            )
+
+        #chart_data = _get_random_data()
+        #with chart_container(chart_data):
+            #st.write("Here's your stats")
+            #st.area_chart(chart_data)
 
         chosen_id = stx.tab_bar(data=[
             stx.TabBarItemData(id=1, title="Profil", description="Mes informations"),
