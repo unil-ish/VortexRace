@@ -25,26 +25,26 @@ def main():
     with col1:
         colored_header(
             label="My profil",
-            description="This is a description",
+            description="All my profil informations",
             color_name="blue-80",
         )
 
         card(
             title="My profil",
-            text="All my profil informations",
+            text="",
             image="profil.jpg",
             url="https://www.google.com",
         )
     with col2:
         colored_header(
             label="My Statistics",
-            description="This is a description",
+            description="All your stats",
             color_name="blue-80",
         )
 
         card(
             title="My Statistics",
-            text="All your stats",
+            text="",
             image="profil.jpg",
             url="https://www.google.com",
         )
@@ -57,12 +57,12 @@ def main():
     with col3:
         colored_header(
             label="Vortex Race",
-            description="This is a description",
+            description="The Vortex Race website",
             color_name="blue-80",
         )
         card(
             title="Vortex Race",
-            text="The Vortex Race website",
+            text="",
             image="VortexRaceLogo.png",
             url="https://www.vortexrace.ch",
         )
