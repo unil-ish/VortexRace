@@ -79,7 +79,7 @@ def main():
     ], default=1)
 
     if chosen_id == "1":
-
+        col1,col2,col3 = st.columns([2,1,2])
         with col3:
             # Afficher la liste des favoris
             conn = sqlite3.connect("videos.db")
