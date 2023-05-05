@@ -30,6 +30,21 @@ def mediatheque():
                      (title text, author text, video_id text)''')
     conn.commit()"""
 
+    # Essais pour vider le st.text_input afin d'eviter les doublons
+    # Enlever les "#" des ligns 36-37 39-40, puis essayer avec soit 42-43 soit 45-46 en ayant la ligne 49 en commentaire
+
+    # if "my_text_input" not in st.session_state:
+    #     st.session_state.my_text_input = ""
+    #
+    # def clear_text_input():
+    #     st.session_state.my_text_input = ""
+
+    # url = st.text_input('Entrez l\'URL de la vidéo YouTube:', value=st.session_state.my_text_input,
+    #                                  on_change=clear_text_input, key="text_input")
+
+    # url = st.text_input('Entrez l\'URL de la vidéo YouTube:',
+    #                     on_change=clear_text_input, key="widget")
+
     # Demander à l'utilisateur de saisir une URL YouTube
     url = st.text_input('Entrez l\'URL de la vidéo YouTube:')
 
