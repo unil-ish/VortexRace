@@ -1,9 +1,9 @@
 import streamlit as st
 import sqlite3
 from pytube import YouTube
-import logintests2
+import main
 
-username = logintests2.get_logged_in_user()
+username = main.get_logged_in_user()
 
 def mediatheque():
     # Se connecter à la base de données
