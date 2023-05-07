@@ -5,16 +5,6 @@ import logintests2
 
 username = logintests2.get_logged_in_user()
 
-"""
-from loginWidgetStolen import __login__
-
-myObject = __login__(auth_token = "courier_auth_token",
-                    company_name = "Shims",
-                    width = 200, height = 250,
-                    logout_button_name = 'Logout', hide_menu_bool = False,
-                    hide_footer_bool = False,)
-username = myObject.get_username()"""
-
 def mediatheque():
     # Se connecter à la base de données
     conn = sqlite3.connect('videos.db')
@@ -24,11 +14,6 @@ def mediatheque():
     c.execute('''CREATE TABLE IF NOT EXISTS videos
                  (url text, title text, video_id text, likes integer NOT NULL DEFAULT 0, dislikes integer NOT NULL DEFAULT 0, liked_by, disliked_by, fav_by)''')
     conn.commit()
-
-    """# Créer la table pour stocker les vidéos favorites (doit être perso, une pour chaque user)
-    c.execute('''CREATE TABLE IF NOT EXISTS favorites
-                     (title text, author text, video_id text)''')
-    conn.commit()"""
 
     # Essais pour vider le st.text_input afin d'eviter les doublons
     # Enlever les "#" des ligns 36-37 39-40, puis essayer avec soit 42-43 soit 45-46 en ayant la ligne 49 en commentaire
