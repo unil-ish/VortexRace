@@ -32,9 +32,9 @@ def main():
             emoji="🌀",
             font_size=54,
             falling_speed=5,
-            animation_length="7s",
+            animation_length="0.3s",
         )
-        col1, col2, col3 = st.columns(3)
+        col1, col2, col3, col4 = st.columns(4)
         with col1:
             colored_header(
                 label="My profil",
@@ -66,8 +66,25 @@ def main():
             col1.metric(label="Course 1 [min]", value=12, delta=0)
             col2.metric(label="Course 2 [min]", value=15, delta=+3)
             style_metric_cards()
-
         with col3:
+            colored_header(
+                label="Médiathèque",
+                description="Médiathèque",
+                color_name="blue-80",
+            )
+            st.card(
+                title="Vortex",
+                text="",
+                image="VortexRaceLogo.png",
+            )
+            card(
+                title="Médiathèque",
+                text="",
+                image="VortexRaceLogo.png",
+                #click=mediatheque.mediatheque(),
+            )
+
+        with col4:
             colored_header(
                 label="Vortex Race",
                 description="The Vortex Race website",
