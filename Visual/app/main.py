@@ -73,11 +73,6 @@ def main():
                 description="Médiathèque",
                 color_name="blue-80",
             )
-            st.card(
-                title="Vortex",
-                text="",
-                image="VortexRaceLogo.png",
-            )
             card(
                 title="Médiathèque",
                 text="",
