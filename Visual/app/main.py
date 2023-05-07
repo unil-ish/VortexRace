@@ -9,10 +9,9 @@ from streamlit_extras.colored_header import colored_header
 from streamlit_extras.let_it_rain import rain
 from streamlit_extras.metric_cards import style_metric_cards
 
-
 username = logintests2.get_logged_in_user()
 
-#st.set_page_config(page_title="Mes onglets", layout="wide")
+st.set_page_config(page_title="Mes onglets", layout="wide")
 with open('Visual/app/style.css') as f :
     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
@@ -23,9 +22,9 @@ def main():
             emoji="🌀",
             font_size=54,
             falling_speed=5,
-            animation_length="7s",
+            animation_length="0.3s",
         )
-        col1, col2, col3 = st.columns(3)
+        col1, col2, col3, col4 = st.columns(4)
         with col1:
             colored_header(
                 label="My profil",
@@ -57,8 +56,25 @@ def main():
             col1.metric(label="Course 1 [min]", value=12, delta=0)
             col2.metric(label="Course 2 [min]", value=15, delta=+3)
             style_metric_cards()
-
         with col3:
+            colored_header(
+                label="Médiathèque",
+                description="Médiathèque",
+                color_name="blue-80",
+            )
+            st.card(
+                title="Vortex",
+                text="",
+                image="VortexRaceLogo.png",
+            )
+            card(
+                title="Médiathèque",
+                text="",
+                image="VortexRaceLogo.png",
+                #click=mediatheque.mediatheque(),
+            )
+
+        with col4:
             colored_header(
                 label="Vortex Race",
                 description="The Vortex Race website",
@@ -121,9 +137,6 @@ def main():
             col1, col2, col3 = st.columns(3)
             col2.header('Mes statistiques')
             val = stx.stepper_bar(steps=["Ready", "Get Set", "Go"])
-
-        if chosen_id == "3":
-            mediatheque.mediatheque()
 
             # st.text_area('Bonjour')
             # st.text_input()
