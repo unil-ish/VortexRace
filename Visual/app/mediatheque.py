@@ -135,6 +135,7 @@ def mediatheque():
                     conn.commit()
                 st.experimental_rerun()
 
+
         with col_dislike:
             c.execute("SELECT likes, dislikes, liked_by, disliked_by FROM videos WHERE video_id = ?", (video_id,))
             result = c.fetchone()

@@ -66,6 +66,7 @@ def main():
             col1.metric(label="Course 1 [min]", value=12, delta=0)
             col2.metric(label="Course 2 [min]", value=15, delta=+3)
             style_metric_cards()
+
         with col3:
             colored_header(
                 label="Médiathèque",
