@@ -2,7 +2,6 @@ import streamlit as st
 import sqlite3
 import json
 import mediatheque
-import extra_streamlit_components as stx
 from streamlit_login_auth_ui.widgets import __login__
 from streamlit_extras.colored_header import colored_header
 
@@ -21,19 +20,18 @@ LOGGED_IN = __login__obj.build_login_ui()
 def main():
     if get_logged_in_user() != 'User not logged in':
         st.title('Vortex Race')
+        tab1, tab2, tab3 = st.tabs(["👤  :blue[Profil]", "📺  Médiathèque", "🌀  Vortex Race"])
 
-        chosen_id = stx.tab_bar(data=[
-            stx.TabBarItemData(id=1, title="Profil", description="Mes informations"),
-            stx.TabBarItemData(id=2, title="Statistiques", description="Mes courses"),
-            stx.TabBarItemData(id=3, title="Médiathèque", description="Les vidéos"),
-        ], default=1)
-
-        if chosen_id == "1":
+        with tab1:
+            colored_header(
+                label="My profil",
+                description="All my profil informations",
+                color_name="blue-80",
+            )
             col1, col2, col3 = st.columns([2, 1, 2])
 
             with col1:
                 col1.header("Bienvenue " + get_logged_in_user() + " !")
-
             with col3:
                 # Afficher la liste des favoris
                 conn = sqlite3.connect("videos.db")
@@ -55,7 +53,7 @@ def main():
                     st.write(
                         f'<iframe width="560" height="315" src="https://www.youtube.com/embed/{row[2]}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>',
                         unsafe_allow_html=True)
-                    if st.button(f"Retirer des favoris", key=f"add-to-favorites-{i}"):
+                    if st.button(f"Retirer des favoris", key=f"add-to-favorites-{i}-{video_id}"):
                         # Retirer la vidéo à la liste des favoris
                         fav_by_list = fav_by.split(", ")
                         fav_by_list.remove(get_logged_in_user())
@@ -65,13 +63,20 @@ def main():
                         # Rafraîchir la page
                         st.experimental_rerun()
 
-        if chosen_id == "2":
-            col1, col2, col3 = st.columns(3)
-            col2.header('Mes statistiques')
-            val = stx.stepper_bar(steps=["Ready", "Get Set", "Go"])
-
-        if chosen_id == "3":
+        with tab2:
+            colored_header(
+                label="Médiathèque",
+                description="Médiathèque",
+                color_name="blue-80",
+            )
             mediatheque.mediatheque()
+
+        with tab3:
+            colored_header(
+                label="VortexRace",
+                description="Official Website",
+                color_name="blue-80",
+            )
 
     else:
         st.warning('PLease login first')
@@ -96,3 +101,5 @@ def get_logged_in_name(username):
 
 if __name__ == '__main__':
     main()
+
+
