@@ -53,7 +53,7 @@ def main():
                     st.write(
                         f'<iframe width="560" height="315" src="https://www.youtube.com/embed/{row[2]}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>',
                         unsafe_allow_html=True)
-                    if st.button(f"Retirer des favoris", key=f"add-to-favorites-{i}-{video_id}"):
+                    if st.button(f"Retirer des favoris", key=f"remove-from-favorites-{i}"):
                         # Retirer la vidéo à la liste des favoris
                         fav_by_list = fav_by.split(", ")
                         fav_by_list.remove(get_logged_in_user())
