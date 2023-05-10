@@ -4,8 +4,6 @@ import json
 import mediatheque
 from streamlit_login_auth_ui.widgets import __login__
 from streamlit_extras.colored_header import colored_header
-from streamlit_extras.let_it_rain import rain
-from streamlit_extras.metric_cards import style_metric_cards
 
 st.set_page_config(page_title="Mes onglets", layout="wide")
 
