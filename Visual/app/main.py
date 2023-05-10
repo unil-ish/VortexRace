@@ -20,7 +20,7 @@ LOGGED_IN = __login__obj.build_login_ui()
 def main():
     if get_logged_in_user() != 'User not logged in':
         st.title('Vortex Race')
-        tab1, tab2, tab3 = st.tabs(["👤  Profil", "📺  Médiathèque", "🌀  Vortex Race"])
+        tab1, tab2, tab3 = st.tabs(["👤  :blue[Profil]", "📺  Médiathèque", "🌀  Vortex Race"])
 
         with tab1:
             colored_header(
