@@ -33,6 +33,7 @@ def main():
 
             with col1:
                 col1.header("Bienvenue " + get_logged_in_user() + " !")
+
             with col3:
                 # Afficher la liste des favoris
                 conn = sqlite3.connect("videos.db")
