@@ -103,13 +103,13 @@ def mediatheque():
                     fav_by = ", ".join(fav_by_list)
                     c.execute("UPDATE videos SET fav_by = ? WHERE video_id = ?", (fav_by, video_id,))
                     conn.commit()
-                    st.write("**La vidéo a bien été ajoutée à vos favoris!**", unsafe_allow_html=True)
+                    st.success("**La vidéo a bien été ajoutée à vos favoris!**")
                 else:
                     fav_by_list.remove(username)
                     fav_by = ", ".join(fav_by_list)
                     c.execute("UPDATE videos SET fav_by = ? WHERE video_id = ?", (fav_by, video_id,))
                     conn.commit()
-                    st.write("**La vidéo a été retirée de vos favoris!**", unsafe_allow_html=True)
+                    st.info("**La vidéo a été retirée de vos favoris!**")
 
         with col_like:
             c.execute("SELECT likes, dislikes, liked_by, disliked_by FROM videos WHERE video_id = ?", (video_id,))
