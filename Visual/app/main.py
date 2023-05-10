@@ -10,7 +10,7 @@ from streamlit_extras.colored_header import colored_header
 from streamlit_extras.let_it_rain import rain
 from streamlit_extras.metric_cards import style_metric_cards
 
-#st.set_page_config(page_title="Mes onglets", layout="wide")
+st.set_page_config(page_title="Mes onglets", layout="wide")
 
 __login__obj = __login__(auth_token = "courier_auth_token",
                     company_name = "Shims",
@@ -32,7 +32,7 @@ def main():
             emoji="🌀",
             font_size=54,
             falling_speed=5,
-            animation_length="0.3s",
+            animation_length="0.0s",
         )
         col1, col2, col3, col4 = st.columns(4)
         with col1:
