@@ -5,7 +5,12 @@ import mediatheque
 from streamlit_login_auth_ui.widgets import __login__
 from streamlit_extras.colored_header import colored_header
 
-st.set_page_config(page_title="Mes onglets", layout="wide")
+st.set_page_config(
+    page_title="VortexRace",
+    page_icon="VortexRaceLogo.png",
+    layout="wide",
+    initial_sidebar_state="expanded",
+)
 
 __login__obj = __login__(auth_token = "courier_auth_token",
                     company_name = "Shims",
@@ -20,7 +25,7 @@ LOGGED_IN = __login__obj.build_login_ui()
 def main():
     if get_logged_in_user() != 'User not logged in':
         st.title('Vortex Race')
-        tab1, tab2, tab3 = st.tabs(["👤  :blue[Profil]", "📺  Médiathèque", "🌀  Vortex Race"])
+        tab1, tab2, tab3 = st.tabs(["👤  Profil", "📺  Médiathèque", "🌀  Vortex Race"])
 
         with tab1:
             colored_header(
