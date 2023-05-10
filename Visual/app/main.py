@@ -5,12 +5,12 @@ import mediatheque
 from streamlit_login_auth_ui.widgets import __login__
 from streamlit_extras.colored_header import colored_header
 
-st.set_page_config(
-    page_title="VortexRace",
-    page_icon="VortexRaceLogo.png",
-    layout="wide",
-    initial_sidebar_state="expanded",
-)
+#st.set_page_config(
+    #page_title="VortexRace",
+    #page_icon="VortexRaceLogo.png",
+    #layout="wide",
+    #initial_sidebar_state="expanded",
+#)
 
 __login__obj = __login__(auth_token = "courier_auth_token",
                     company_name = "Shims",

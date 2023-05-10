@@ -1,11 +1,6 @@
-[server]
-headless = true
-enableCORS=false
-port = 8501
-
 [theme]
-primaryColor="#046ccc"
-backgroundColor="#e8e4dc"
+primaryColor="blue"
+backgroundColor="#FFFFFF"
 secondaryBackgroundColor="#F0F2F6"
-textColor="#262730"
+textColor="blue-80"
 font="sans serif"
