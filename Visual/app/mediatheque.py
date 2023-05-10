@@ -39,32 +39,37 @@ def mediatheque():
 
     # Si l'URL est valide, extraire les informations de la vidéo et les stocker dans la base de données
     if url:
-        try:
-            # Extraire les informations de la vidéo YouTube
-            video = YouTube(url)
-            title = ""
-            video_id = video.video_id
-            likes = 0
-            dislikes = 0
-            liked_by = ""
-            disliked_by = ""
-            fav_by = ""
 
-            # Stocker les informations de la vidéo dans la base de données
-            c.execute("INSERT INTO videos VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (url, title, video_id, likes, dislikes, liked_by, disliked_by, fav_by))
-            conn.commit()
+        query = "SELECT * FROM videos WHERE url = ?"
+        string_to_check = url
 
-            # Afficher la vidéo dans un IFrame
-            st.write(f'### {title}')
-            st.write(f'<iframe width="560" height="315" src="https://www.youtube.com/embed/{video_id}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>', unsafe_allow_html=True)
+        c.execute(query, (string_to_check,))
+        result = c.fetchone()
 
-            # Ajouter un lien pour rediriger vers la page YouTube de la vidéo
-            st.write(f'[Regarder sur YouTube](https://www.youtube.com/watch?v={video_id})')
+        if result:
+            st.error("Cette vidéo est déja dans la base de donnée")
 
-        except Exception as e:
-            st.write(e)
-            st.error('Une erreur est survenue lors de l\'extraction de la vidéo: Nous n\'acceptons que les vidéos Youtube. Il est possible que votre lien soit obsolète.')
-            st.error("Si vous êtes sûr de votre lien YouTube, réessayez.")
+        else:
+            try:
+                # Extraire les informations de la vidéo YouTube
+                video = YouTube(url)
+                title = ""
+                video_id = video.video_id
+                likes = 0
+                dislikes = 0
+                liked_by = ""
+                disliked_by = ""
+                fav_by = ""
+
+                # Stocker les informations de la vidéo dans la base de données
+                c.execute("INSERT INTO videos VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (url, title, video_id, likes, dislikes, liked_by, disliked_by, fav_by))
+                conn.commit()
+
+
+            except Exception as e:
+                st.write(e)
+                st.error('Une erreur est survenue lors de l\'extraction de la vidéo: Nous n\'acceptons que les vidéos Youtube. Il est possible que votre lien soit obsolète.')
+                st.error("Si vous êtes sûr de votre lien YouTube, réessayez.")
 
     # Afficher la liste des vidéos dans la base de données
     c.execute("SELECT url, title, video_id, likes, dislikes, liked_by, disliked_by, fav_by, (likes - dislikes) AS difference FROM videos ORDER BY difference DESC ")
