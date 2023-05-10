@@ -4,8 +4,10 @@ import json
 import mediatheque
 from streamlit_login_auth_ui.widgets import __login__
 from streamlit_extras.colored_header import colored_header
+from streamlit_extras.let_it_rain import rain
+from streamlit_extras.metric_cards import style_metric_cards
 
-#st.set_page_config(page_title="Mes onglets", layout="wide")
+st.set_page_config(page_title="Mes onglets", layout="wide")
 
 __login__obj = __login__(auth_token = "courier_auth_token",
                     company_name = "Shims",
@@ -35,9 +37,7 @@ def main():
                 # Afficher la liste des favoris
                 conn = sqlite3.connect("videos.db")
                 c = conn.cursor()
-                c.execute(
-                    "SELECT url, title, video_id, likes, dislikes, liked_by, disliked_by, fav_by FROM videos WHERE fav_by LIKE ?",
-                    ('%' + get_logged_in_user() + '%',))
+                c.execute("SELECT url, title, video_id, likes, dislikes, liked_by, disliked_by, fav_by FROM videos WHERE fav_by LIKE ?", ('%'+get_logged_in_user()+'%',))
                 rows = c.fetchall()
                 st.write('### Liste des favoris:')
                 for i, row in enumerate(reversed(rows)):
