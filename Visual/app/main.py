@@ -31,6 +31,7 @@ def main():
                 color_name="blue-80",
             )
             col1, col2, col3 = st.columns([2, 1, 2])
+
             with col1:
                 col1.header("Bienvenue " + get_logged_in_user() + " !")
             with col3:
