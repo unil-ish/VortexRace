@@ -2,6 +2,8 @@ import streamlit as st
 import sqlite3
 import json
 import mediatheque
+import webbrowser
+from streamlit_card import card
 from streamlit_login_auth_ui.widgets import __login__
 from streamlit_extras.colored_header import colored_header
 
@@ -24,26 +26,25 @@ LOGGED_IN = __login__obj.build_login_ui()
 
 def main():
     if get_logged_in_user() != 'User not logged in':
-        st.title('Vortex Race')
         tab1, tab2, tab3 = st.tabs(["👤  Profil", "📺  Médiathèque", "🌀  Vortex Race"])
 
         with tab1:
             colored_header(
                 label="My profil",
-                description="All my profil informations",
+                description="",
                 color_name="blue-80",
             )
-            col1, col2, col3 = st.columns([2, 1, 2])
+            col1, col2 = st.columns(2)
 
             with col1:
-                col1.header("Bienvenue " + get_logged_in_user() + " !")
-            with col3:
+                col1.subheader("Bienvenue " + get_logged_in_user() + " !")
+            with col2:
                 # Afficher la liste des favoris
                 conn = sqlite3.connect("videos.db")
                 c = conn.cursor()
                 c.execute("SELECT url, title, video_id, likes, dislikes, liked_by, disliked_by, fav_by FROM videos WHERE fav_by LIKE ?", ('%'+get_logged_in_user()+'%',))
                 rows = c.fetchall()
-                st.write('### Liste des favoris:')
+                st.subheader('Liste des favoris:')
                 for i, row in enumerate(reversed(rows)):
                     # Extraire les informations de la vidéo
                     url = row[0]
@@ -71,17 +72,31 @@ def main():
         with tab2:
             colored_header(
                 label="Médiathèque",
-                description="Médiathèque",
+                description="",
                 color_name="blue-80",
             )
             mediatheque.mediatheque()
 
         with tab3:
             colored_header(
-                label="VortexRace",
-                description="Official Website",
+                label="Vortex Race",
+                description="",
                 color_name="blue-80",
             )
+            col1, col2 = st.columns(2)
+            with col1:
+                st.subheader("Accéder au site web officiel de la Vortex Race")
+                url = 'https://vortexrace.ch'
+                if st.button('Accéder'):
+                    webbrowser.open_new_tab(url)
+
+            with col2:
+                card(
+                    title="",
+                    text="",
+                    url="https://vortexrace.ch",
+                    image="https://vortexrace.ch/wp-content/uploads/2022/04/cropped-VortexRace_Logo_Plan-de-travail-1-copie-6.png"
+                )
 
     else:
         st.warning('PLease login first')
