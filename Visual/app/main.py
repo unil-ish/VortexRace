@@ -121,7 +121,7 @@ def main():
                     c.execute("UPDATE videos SET fav_by = ? WHERE video_id = ?", (fav_by, video_id,))
                     conn.commit()
                     # Rafraîchir la page
-                    st.cache_data()
+                    st.experimental_rerun()
 
         with tab2:
             colored_header(

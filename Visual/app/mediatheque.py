@@ -168,7 +168,7 @@ def mediatheque():
                     disliked_by = ", ".join(disliked_by_list)
                     c.execute("UPDATE videos SET dislikes = dislikes - 1, disliked_by = ? WHERE video_id = ?", (disliked_by, video_id,))
                     conn.commit()
-                st.cache_data()
+                st.experimental_rerun()
 
         with col4:
             if st.button(f"dev-btn: Retirer video", key=f"dev-btn-{i}"):
@@ -176,5 +176,5 @@ def mediatheque():
                 c.execute("DELETE FROM videos WHERE video_id = ?", (video_id,))
                 conn.commit()
                 # Rafraîchir la page
-                st.cache_data()
+                st.experimental_rerun()
 
