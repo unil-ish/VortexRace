@@ -158,7 +158,7 @@ def main():
                 )
 
     else:
-        st.warning('PLease login first')
+        st.warning('Please login first')
 
 def get_logged_in_user():
     if LOGGED_IN:
