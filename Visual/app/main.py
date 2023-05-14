@@ -92,6 +92,28 @@ def main():
                 description="",
                 color_name="blue-60",
             )
+            st.subheader("Name")
+            st.caption("@Pseudo")
+            col1, col2, col3, col4, col5, col6 = st.columns(6)
+            with col1:
+                st.button('Créer', type="primary")
+            with col2:
+                st.button('Éditer', type="primary")
+            with col3:
+                st.button('Supprimer', type="primary")
+            col1, col2 = st.columns(2)
+            with col1:
+                st.subheader("Informations personnelles")
+                st.markdown("---")
+                st.markdown("Participation : ")
+                st.markdown("3km en 12 min 43 secondes")
+                st.markdown("Pour la prochaine édition, je vise un temps de 11 min 30 secondes")
+            with col2:
+                st.subheader("Vidéos")
+                st.markdown("---")
+                st.markdown("Mon youtubeur préféré est : ")
+                # Afficher la liste des favoris
+                mediatheque.favoris()
 
             username = get_logged_in_user()
 
@@ -113,10 +135,6 @@ def main():
             else:
                 add_profile_done_false(username)
                 st.experimental_rerun()
-
-
-            # Afficher la liste des favoris
-            mediatheque.favoris()
 
 
         with tab2:
