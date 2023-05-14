@@ -105,6 +105,8 @@ def main():
             # if the profile is fully finished, display message
             elif check_profile_done_finished(username):
                 st.markdown("PROFILE IS DONE")
+                # Afficher la liste des favoris
+                # mediatheque.favoris()
 
 
             # if the key:value pair doesn't exist, create it
@@ -115,34 +117,7 @@ def main():
 
             # Afficher la liste des favoris
             mediatheque.favoris()
-            # conn = sqlite3.connect("videos.db")
-            # c = conn.cursor()
-            # c.execute("SELECT url, title, video_id, likes, dislikes, liked_by, disliked_by, fav_by FROM videos WHERE fav_by LIKE ?", ('%'+get_logged_in_user()+'%',))
-            # rows = c.fetchall()
-            # st.header('Liste des favoris:')
-            # for i, row in enumerate(reversed(rows)):
-            #     # Extraire les informations de la vidéo
-            #     url = row[0]
-            #     title = row[1]
-            #     video_id = row[2]
-            #     likes = row[3]
-            #     dislikes = row[4]
-            #     liked_by = row[5]
-            #     disliked_by = row[6]
-            #     fav_by = row[7]
-            #
-            #     st.write(
-            #         f'<iframe width="560" height="315" src="https://www.youtube.com/embed/{row[2]}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>',
-            #         unsafe_allow_html=True)
-            #     if st.button(f"Retirer des favoris", key=f"remove-from-favorites-{i}"):
-            #         # Retirer la vidéo à la liste des favoris
-            #         fav_by_list = fav_by.split(", ")
-            #         fav_by_list.remove(get_logged_in_user())
-            #         fav_by = ", ".join(fav_by_list)
-            #         c.execute("UPDATE videos SET fav_by = ? WHERE video_id = ?", (fav_by, video_id,))
-            #         conn.commit()
-            #         # Rafraîchir la page
-            #         st.experimental_rerun()
+
 
         with tab2:
             colored_header(
