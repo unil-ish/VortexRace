@@ -93,35 +93,56 @@ def main():
                 color_name="blue-60",
             )
 
-            # Afficher la liste des favoris
-            conn = sqlite3.connect("videos.db")
-            c = conn.cursor()
-            c.execute("SELECT url, title, video_id, likes, dislikes, liked_by, disliked_by, fav_by FROM videos WHERE fav_by LIKE ?", ('%'+get_logged_in_user()+'%',))
-            rows = c.fetchall()
-            st.header('Liste des favoris:')
-            for i, row in enumerate(reversed(rows)):
-                # Extraire les informations de la vidéo
-                url = row[0]
-                title = row[1]
-                video_id = row[2]
-                likes = row[3]
-                dislikes = row[4]
-                liked_by = row[5]
-                disliked_by = row[6]
-                fav_by = row[7]
+            username = get_logged_in_user()
 
-                st.write(
-                    f'<iframe width="560" height="315" src="https://www.youtube.com/embed/{row[2]}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>',
-                    unsafe_allow_html=True)
-                if st.button(f"Retirer des favoris", key=f"remove-from-favorites-{i}"):
-                    # Retirer la vidéo à la liste des favoris
-                    fav_by_list = fav_by.split(", ")
-                    fav_by_list.remove(get_logged_in_user())
-                    fav_by = ", ".join(fav_by_list)
-                    c.execute("UPDATE videos SET fav_by = ? WHERE video_id = ?", (fav_by, video_id,))
-                    conn.commit()
-                    # Rafraîchir la page
-                    st.experimental_rerun()
+            # checks if the key "profile_done" exists and is false. if yes (exists and false), it indicates it to the user
+            # and updates it from false to true (add button and stuff)
+            if check_profile_done(username):
+                st.markdown("profile is not done")
+                # update_profile(username)
+
+
+            # if the profile is fully finished, display message
+            elif check_profile_done_finished(username):
+                st.markdown("PROFILE IS DONE")
+
+
+            # if the key:value pair doesn't exist, create it
+            else:
+                add_profile_done_false(username)
+                st.experimental_rerun()
+
+
+            # Afficher la liste des favoris
+            mediatheque.favoris()
+            # conn = sqlite3.connect("videos.db")
+            # c = conn.cursor()
+            # c.execute("SELECT url, title, video_id, likes, dislikes, liked_by, disliked_by, fav_by FROM videos WHERE fav_by LIKE ?", ('%'+get_logged_in_user()+'%',))
+            # rows = c.fetchall()
+            # st.header('Liste des favoris:')
+            # for i, row in enumerate(reversed(rows)):
+            #     # Extraire les informations de la vidéo
+            #     url = row[0]
+            #     title = row[1]
+            #     video_id = row[2]
+            #     likes = row[3]
+            #     dislikes = row[4]
+            #     liked_by = row[5]
+            #     disliked_by = row[6]
+            #     fav_by = row[7]
+            #
+            #     st.write(
+            #         f'<iframe width="560" height="315" src="https://www.youtube.com/embed/{row[2]}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>',
+            #         unsafe_allow_html=True)
+            #     if st.button(f"Retirer des favoris", key=f"remove-from-favorites-{i}"):
+            #         # Retirer la vidéo à la liste des favoris
+            #         fav_by_list = fav_by.split(", ")
+            #         fav_by_list.remove(get_logged_in_user())
+            #         fav_by = ", ".join(fav_by_list)
+            #         c.execute("UPDATE videos SET fav_by = ? WHERE video_id = ?", (fav_by, video_id,))
+            #         conn.commit()
+            #         # Rafraîchir la page
+            #         st.experimental_rerun()
 
         with tab2:
             colored_header(
@@ -177,6 +198,73 @@ def get_logged_in_name(username):
     for user in data:
         if user['username'] == username:
             return user["name"]
+
+
+def check_profile_done(username):
+    """
+    Checks whether a pair 'ProfileDone: false' exists in the dictionary corresponding to the given username in the JSON file.
+    Returns True if it exists, and False otherwise.
+    """
+    with open('_secret_auth_.json', 'r') as f:
+        data = json.load(f)
+
+    for item in data:
+        if item['username'] == username:
+            if 'ProfileDone' in item and item['ProfileDone'] == "false":
+                return True
+            else:
+                return False
+
+def check_profile_done_finished(username):
+    """
+    Checks whether a pair 'ProfileDone: false' exists in the dictionary corresponding to the given username in the JSON file.
+    Returns True if it exists, and False otherwise.
+    """
+    with open('_secret_auth_.json', 'r') as f:
+        data = json.load(f)
+
+    for item in data:
+        if item['username'] == username:
+            if 'ProfileDone' in item and item['ProfileDone'] == "true":
+                return True
+            else:
+                return False
+
+
+def add_profile_done_false(username):
+    """
+    Adds a new key-value pair 'ProfileDone: false' to the dictionary corresponding to the given username in the JSON file.
+    """
+    with open('_secret_auth_.json', 'r') as f:
+        data = json.load(f)
+
+    # Find the dictionary with the specified username
+    for item in data:
+        if item['username'] == username:
+            item['ProfileDone'] = "false"
+            break
+
+    with open('_secret_auth_.json', 'w') as f:
+        json.dump(data, f)
+
+
+def update_profile(username):
+    """
+    Updates the 'ProfileDone' key to 'true' for the dictionary with the specified username in the list in the JSON file.
+    """
+    with open('_secret_auth_.json', 'r') as f:
+        data = json.load(f)
+
+    # Find the dictionary with the specified username
+    for item in data:
+        if item['username'] == username:
+            item['ProfileDone'] = "true"
+            break
+
+    with open('_secret_auth_.json', 'w') as f:
+        json.dump(data, f)
+
+
 
 if __name__ == '__main__':
     main()
