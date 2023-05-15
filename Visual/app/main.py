@@ -92,7 +92,7 @@ def main():
                 description="",
                 color_name="blue-60",
             )
-            st.subheader("Name")
+            st.subheader(get_logged_in_name(get_logged_in_user()))
             st.caption("@Pseudo")
             col1, col2, col3, col4, col5, col6 = st.columns(6)
             with col1:
