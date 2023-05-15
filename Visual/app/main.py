@@ -4,6 +4,8 @@ import json
 import mediatheque
 import toml
 import webbrowser
+import os
+from PIL import Image
 from streamlit_card import card
 from streamlit_login_auth_ui.widgets import __login__
 from streamlit_extras.colored_header import colored_header
@@ -85,33 +87,61 @@ def main():
                 if st.button("Accéder", key=3, type="primary"):
                     webbrowser.open_new_tab(url)
 
-
         with tab1:
             colored_header(
                 label="My profil",
                 description="",
                 color_name="blue-60",
             )
-            st.subheader(get_logged_in_name(get_logged_in_user()))
-            st.caption("@Pseudo")
-            col1, col2, col3, col4, col5, col6 = st.columns(6)
+
+            col1, col2, col3 = st.columns(3)
             with col1:
-                st.button('Créer', type="primary")
+                st.subheader("Mes infos")
+                st.markdown("---")
+                st.markdown("**Nom :**")
+                st.markdown(get_logged_in_name(get_logged_in_user()))
+                st.markdown("**Pseudo :**")
+                st.caption("@Test2023")
+
+                # Charger les images
+                image_path1 = os.path.abspath(
+                    "/Users/thomasrywalski/Documents/UNIL/Informatique/PycharmProjects/VortexRace/Visual/app/Avatar1.jpg")
+                image_path2 = os.path.abspath(
+                    "/Users/thomasrywalski/Documents/UNIL/Informatique/PycharmProjects/VortexRace/Visual/app/Avatar2.jpg")
+                image_path3 = os.path.abspath(
+                    "/Users/thomasrywalski/Documents/UNIL/Informatique/PycharmProjects/VortexRace/Visual/app/Avatar3.jpg")
+
+                avatar1 = Image.open(image_path1)
+                avatar2 = Image.open(image_path2)
+                avatar3 = Image.open(image_path3)
+
+                # Créer une liste déroulante pour choisir l'avatar
+                st.markdown("**Avatar :** ")
+                avatar_choice = st.selectbox("Choisissez votre avatar :", ["Monstracoco", "Crocorreur", "Furieur"], format_func=lambda x: x)
+
+                # Afficher l'avatar sélectionné
+                if avatar_choice == "Monstracoco":
+                    st.image(avatar1, caption="Monstracoco", use_column_width=True)
+                elif avatar_choice == "Crocorreur":
+                    st.image(avatar2, caption="Crocorreur", use_column_width=True)
+                elif avatar_choice == "Furieur":
+                    st.image(avatar3, caption="Furieur", use_column_width=True)
+
             with col2:
-                st.button('Éditer', type="primary")
+                st.subheader("Mes courses")
+                st.markdown("---")
+                st.markdown("**Participation :** ")
+                st.markdown("3 km")
+                st.markdown("**Temps :** ")
+                st.markdown("12 min et 43 secondes")
+                st.markdown("**Pour la prochaine édition, mes objectifs sont :**")
+                st.markdown("3 km")
+                st.markdown("11 min et 30 secondes")
             with col3:
-                st.button('Supprimer', type="primary")
-            col1, col2 = st.columns(2)
-            with col1:
-                st.subheader("Informations personnelles")
+                st.subheader("Mes vidéos")
                 st.markdown("---")
-                st.markdown("Participation : ")
-                st.markdown("3km en 12 min 43 secondes")
-                st.markdown("Pour la prochaine édition, je vise un temps de 11 min 30 secondes")
-            with col2:
-                st.subheader("Vidéos")
-                st.markdown("---")
-                st.markdown("Mon youtubeur préféré est : ")
+                st.markdown("**Youtubeur préféré :** ")
+                st.markdown("Elijah Green ")
                 # Afficher la liste des favoris
                 mediatheque.favoris()
 

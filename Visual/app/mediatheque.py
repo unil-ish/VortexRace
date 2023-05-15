@@ -185,7 +185,7 @@ def favoris():
         "SELECT url, title, video_id, likes, dislikes, liked_by, disliked_by, fav_by FROM videos WHERE fav_by LIKE ?",
         ('%' + username + '%',))
     rows = c.fetchall()
-    st.markdown('Liste des favoris:')
+    st.markdown('**Liste des favoris :**')
     for i, row in enumerate(reversed(rows)):
         # Extraire les informations de la vidéo
         url = row[0]
