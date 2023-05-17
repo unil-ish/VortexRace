@@ -54,9 +54,6 @@ def main():
                 st.markdown(" En accédant à la page médiathèque de notre web app, vous pourrez consulter toutes les vidéos qui vous plaisent"
                             " afin de rassembler les connaissances nécessaires pour vos entrainements")
                 st.markdown(" ")
-                url = ''
-                if st.button("Accéder", key=2, type="primary"):
-                    webbrowser.open_new_tab(url)
 
             with col2:
                 card(
