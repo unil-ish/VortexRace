@@ -105,11 +105,11 @@ def main():
 
                 # Charger les images
                 image_path1 = os.path.abspath(
-                    "/Users/thomasrywalski/Documents/UNIL/Informatique/PycharmProjects/VortexRace/Visual/app/Avatar1.jpg")
+                    "./Visual/app/Avatar1.jpg")
                 image_path2 = os.path.abspath(
-                    "/Users/thomasrywalski/Documents/UNIL/Informatique/PycharmProjects/VortexRace/Visual/app/Avatar2.jpg")
+                    "./Visual/app/Avatar2.jpg")
                 image_path3 = os.path.abspath(
-                    "/Users/thomasrywalski/Documents/UNIL/Informatique/PycharmProjects/VortexRace/Visual/app/Avatar3.jpg")
+                    "./Visual/app/Avatar3.jpg")
 
                 avatar1 = Image.open(image_path1)
                 avatar2 = Image.open(image_path2)
