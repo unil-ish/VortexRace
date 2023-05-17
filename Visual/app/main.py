@@ -80,7 +80,7 @@ def main():
                     " entrez dans le monde de la mythique course et accéder par exemple à l'inscription, "
                     " la galerie photo et les informations pratiques.")
                 st.markdown(" ")
-                url = ''
+                url = 'https://vortexrace.ch'
                 if st.button("Accéder", key=3, type="primary"):
                     webbrowser.open_new_tab(url)
 
