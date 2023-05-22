@@ -95,75 +95,112 @@ def main():
             )
 
             col1, col2, col3 = st.columns(3)
-            with col1:
-                st.subheader("Mes infos")
-                st.markdown("---")
-                st.markdown("**Nom :**")
-                st.markdown(get_logged_in_name(get_logged_in_user()))
-                st.markdown("**Pseudo :**")
-                st.caption("@Test2023")
 
-                # Charger les images
-                image_path1 = os.path.abspath(
-                    "./Visual/app/Avatar1.jpg")
-                image_path2 = os.path.abspath(
-                    "./Visual/app/Avatar2.jpg")
-                image_path3 = os.path.abspath(
-                    "./Visual/app/Avatar3.jpg")
-
-                avatar1 = Image.open(image_path1)
-                avatar2 = Image.open(image_path2)
-                avatar3 = Image.open(image_path3)
-
-                # Créer une liste déroulante pour choisir l'avatar
-                st.markdown("**Avatar :** ")
-                avatar_choice = st.selectbox("Choisissez votre avatar :", ["Monstracoco", "Crocorreur", "Furieur"], format_func=lambda x: x)
-
-                # Afficher l'avatar sélectionné
-                if avatar_choice == "Monstracoco":
-                    st.image(avatar1, caption="Monstracoco", use_column_width=True)
-                elif avatar_choice == "Crocorreur":
-                    st.image(avatar2, caption="Crocorreur", use_column_width=True)
-                elif avatar_choice == "Furieur":
-                    st.image(avatar3, caption="Furieur", use_column_width=True)
-
-            with col2:
-                st.subheader("Mes courses")
-                st.markdown("---")
-                st.markdown("**Participation :** ")
-                st.markdown("3 km")
-                st.markdown("**Temps :** ")
-                st.markdown("12 min et 43 secondes")
-                st.markdown("**Pour la prochaine édition, mes objectifs sont :**")
-                st.markdown("3 km")
-                st.markdown("11 min et 30 secondes")
-            with col3:
-                st.subheader("Mes vidéos")
-                st.markdown("---")
-                st.markdown("**Youtubeur préféré :** ")
-                st.markdown("Elijah Green ")
-                # Afficher la liste des favoris
-                mediatheque.favoris()
 
             username = get_logged_in_user()
 
             # checks if the key "profile_done" exists and is false. if yes (exists and false), it indicates it to the user
             # and updates it from false to true (add button and stuff)
             if check_profile_done(username):
-                st.markdown("profile is not done")
-                # update_profile(username)
+                update_profile(username)
+
+                with st.form(key='profile_form'):
+
+                    TempParticipation = st.text_input('Entrez la distance de votre course', key='temp_participation') # check box 3 ou/et 7,
+                    TempTemps3km = st.text_input('Entrez le temps de votre course de 3km sous le format _minute_ _secondes_', key='temp_temps_3km')
+
+                    TempTemps7km = st.text_input('Entrez le temps de votre course de 7km sous le format _minute_ _secondes_', key='temp_temps_7km')
+                    TempObjectifDistance = st.text_input('Entrez votre objectif de course en distance', key='temp_objectif_distance')
+                    TempObjectifTemps = st.text_input('Entrez votre objectif de course en temps sous le format _minute_ _secondes_', key='temp_objectif_temps')
+
+                    TempYoutuberFavori = st.text_input('Entrez votre Youtuber favori', key='temp_youtuber_favori')
+                    st.markdown("profile is not done")
+
+                    if st.form_submit_button('Sauver'):
+
+                        TempTemps3kmSplit = TempTemps3km.split()
+                        TempTexteTemps3kmSplit = f"{TempTemps3kmSplit[0]}min {TempTemps3kmSplit[1]}secondes"
+                        TempTemps7kmSplit = TempTemps7km.split()
+                        TempTexteTemps7kmSplit = f"{TempTemps7kmSplit[0]}min {TempTemps7kmSplit[1]}secondes"
+                        TempObjectifTempsSplit = TempObjectifTemps.split()
+                        TempObjectifTempsSplit = f"{TempObjectifTempsSplit[0]}min {TempObjectifTempsSplit[1]}secondes"
+
+                        save_profile(username, TempParticipation, TempTexteTemps3kmSplit, TempTexteTemps7kmSplit, TempObjectifDistance, TempObjectifTempsSplit, TempYoutuberFavori)
+                        st.experimental_rerun()
+
 
 
             # if the profile is fully finished, display message
             elif check_profile_done_finished(username):
+                VarParticipation, VarTemps3km, VarTemps7km, VarObjectifDistance, VarObjectifTemps, VarYoutuberFavori = get_logged_in_profile(username)
                 st.markdown("PROFILE IS DONE")
+
+
+                with col1:
+                    st.subheader("Mes infos")
+                    st.markdown("---")
+                    st.markdown("**Nom :**")
+                    st.markdown(get_logged_in_name(get_logged_in_user()))
+                    st.markdown("**Pseudo :**")
+                    st.caption(username)
+
+                    # Charger les images
+                    image_path1 = os.path.abspath(
+                        "./Visual/app/Avatar1.jpg")
+                    image_path2 = os.path.abspath(
+                        "./Visual/app/Avatar2.jpg")
+                    image_path3 = os.path.abspath(
+                        "./Visual/app/Avatar3.jpg")
+
+                    avatar1 = Image.open(image_path1)
+                    avatar2 = Image.open(image_path2)
+                    avatar3 = Image.open(image_path3)
+
+                    # Créer une liste déroulante pour choisir l'avatar
+                    st.markdown("**Avatar :** ")
+                    avatar_choice = st.selectbox("Choisissez votre avatar :", ["Monstracoco", "Crocorreur", "Furieur"],
+                                                 format_func=lambda x: x)
+
+                    # Afficher l'avatar sélectionné
+                    if avatar_choice == "Monstracoco":
+                        st.image(avatar1, caption="Monstracoco", use_column_width=True)
+                    elif avatar_choice == "Crocorreur":
+                        st.image(avatar2, caption="Crocorreur", use_column_width=True)
+                    elif avatar_choice == "Furieur":
+                        st.image(avatar3, caption="Furieur", use_column_width=True)
+
+                with col2:
+
+                    st.subheader("Mes courses")
+                    st.markdown("---")
+                    st.markdown("**Participation :** ")
+                    st.markdown(VarParticipation)
+                    st.markdown("**Temps 3km:** ")
+                    st.markdown(VarTemps3km)
+                    st.markdown("**Temps 7km:** ")
+                    st.markdown(VarTemps7km)
+                    st.markdown("**Pour la prochaine édition, mes objectifs sont :**")
+                    st.markdown(VarObjectifDistance)
+                    st.markdown(VarObjectifTemps)
+
+                with col3:
+                    st.subheader("Mes vidéos")
+                    st.markdown("---")
+                    st.markdown("**Youtubeur préféré :** ")
+                    st.markdown(VarYoutuberFavori)
+                    # Afficher la liste des favoris
+                    mediatheque.favoris()
+
+                if st.button('Edit Profile'):
+                    reset_profile(username)
+
                 # Afficher la liste des favoris
                 # mediatheque.favoris()
 
 
             # if the key:value pair doesn't exist, create it
             else:
-                add_profile_done_false(username)
+                reset_profile(username)
                 st.experimental_rerun()
 
 
@@ -222,7 +259,6 @@ def get_logged_in_name(username):
         if user['username'] == username:
             return user["name"]
 
-
 def check_profile_done(username):
     """
     Checks whether a pair 'ProfileDone: false' exists in the dictionary corresponding to the given username in the JSON file.
@@ -254,23 +290,6 @@ def check_profile_done_finished(username):
                 return False
 
 
-def add_profile_done_false(username):
-    """
-    Adds a new key-value pair 'ProfileDone: false' to the dictionary corresponding to the given username in the JSON file.
-    """
-    with open('_secret_auth_.json', 'r') as f:
-        data = json.load(f)
-
-    # Find the dictionary with the specified username
-    for item in data:
-        if item['username'] == username:
-            item['ProfileDone'] = "false"
-            break
-
-    with open('_secret_auth_.json', 'w') as f:
-        json.dump(data, f)
-
-
 def update_profile(username):
     """
     Updates the 'ProfileDone' key to 'true' for the dictionary with the specified username in the list in the JSON file.
@@ -287,6 +306,68 @@ def update_profile(username):
     with open('_secret_auth_.json', 'w') as f:
         json.dump(data, f)
 
+def reset_profile(username):
+    """
+        Adds or resets fields to the given username in the JSON file, and adds the "profiledone" check
+        """
+    with open('_secret_auth_.json', 'r') as f:
+        data = json.load(f)
+
+    # Find the dictionary with the specified username
+    for item in data:
+        if item['username'] == username:
+            item['ProfileDone'] = "false"
+            item['participation'] = ""
+            item['temps3kmtexte'] = ["",""]
+            item['temps7kmtexte'] = ""
+            item['objectifdistance'] = ""
+            item['objectiftempstexte'] = ""
+            item['youtuberfavori'] = ""
+            break
+
+    with open('_secret_auth_.json', 'w') as f:
+        json.dump(data, f)
+
+def save_profile(username, TempParticipation, TempTexteTemps3kmSplit, TempTexteTemps7kmSplit, TempObjectifDistance, TempObjectifTempsSplit, TempYoutuberFavori):
+
+    """
+        Completes json with the given info. CURRENTLY NOT SAVING, NOT SURE WHY
+        """
+    with open('_secret_auth_.json', 'r') as f:
+        data = json.load(f)
+
+    # Find the dictionary with the specified username
+    for item in data:
+        if item['username'] == username:
+            item['ProfileDone'] = "true"
+            item['participation'] = TempParticipation
+            item['temps3kmtexte'] = TempTexteTemps3kmSplit
+            item['temps7kmtexte'] = TempTexteTemps7kmSplit
+            item['objectifdistance'] = TempObjectifDistance
+            item['objectiftempstexte'] = TempObjectifTempsSplit
+            item['youtuberfavori'] = TempYoutuberFavori
+            break
+
+    with open('_secret_auth_.json', 'w') as f:
+        json.dump(data, f)
+
+
+
+def get_logged_in_profile(username):
+    """
+    Displays the information on the profile (works if json is modified by hand)
+    """
+    with open('_secret_auth_.json', 'r') as f:
+        data = json.load(f)
+    for user in data:
+        if user['username'] == username:
+            VarParticipation = user['participation']
+            VarTemps3km = user['temps3kmtexte']
+            VarTemps7km = user['temps7kmtexte']
+            VarObjectifDistance = user['objectifdistance']
+            VarObjectifTemps = user['objectiftempstexte']
+            VarYoutuberFavori = user['youtuberfavori']
+            return VarParticipation, VarTemps3km, VarTemps7km, VarObjectifDistance, VarObjectifTemps, VarYoutuberFavori
 
 
 if __name__ == '__main__':
