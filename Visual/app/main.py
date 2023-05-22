@@ -1,8 +1,6 @@
 import streamlit as st
-import sqlite3
 import json
 import mediatheque
-import toml
 import webbrowser
 import os
 from PIL import Image
@@ -10,16 +8,17 @@ from streamlit_card import card
 from streamlit_login_auth_ui.widgets import __login__
 from streamlit_extras.colored_header import colored_header
 
-#st.set_page_config(
-    #page_title="VortexRace",
-    #page_icon="VortexRaceLogo.png",
-    #layout="wide",
-    #initial_sidebar_state="expanded",
-#)
+st.set_page_config(
+    page_title="VortexRace",
+    page_icon="VortexRaceLogo.png",
+    layout="wide",
+    initial_sidebar_state="expanded",
+)
 
-#config = toml.load("Visual/.streamlit/config.toml")
+st.title("Vortex Race +")
+
+#config = toml.load(".streamlit/config.toml")
 #theme = config.get('theme', {})
-#st.set_config(**theme)
 
 __login__obj = __login__(auth_token = "courier_auth_token",
                     company_name = "Shims",
@@ -54,9 +53,6 @@ def main():
                 st.markdown(" En accédant à la page médiathèque de notre web app, vous pourrez consulter toutes les vidéos qui vous plaisent"
                             " afin de rassembler les connaissances nécessaires pour vos entrainements")
                 st.markdown(" ")
-                url = ''
-                if st.button("Accéder", key=2, type="primary"):
-                    webbrowser.open_new_tab(url)
 
             with col2:
                 card(
@@ -83,7 +79,7 @@ def main():
                     " entrez dans le monde de la mythique course et accéder par exemple à l'inscription, "
                     " la galerie photo et les informations pratiques.")
                 st.markdown(" ")
-                url = ''
+                url = 'https://vortexrace.ch'
                 if st.button("Accéder", key=3, type="primary"):
                     webbrowser.open_new_tab(url)
 
