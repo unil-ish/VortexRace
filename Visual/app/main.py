@@ -8,6 +8,7 @@ from streamlit_card import card
 from streamlit_login_auth_ui.widgets import __login__
 from streamlit_extras.colored_header import colored_header
 
+#Configure the page settings
 st.set_page_config(
     page_title="VortexRace",
     page_icon="VortexRaceLogo.png",
@@ -20,6 +21,7 @@ st.title("Vortex Race +")
 #config = toml.load(".streamlit/config.toml")
 #theme = config.get('theme', {})
 
+#Get the logged in username
 __login__obj = __login__(auth_token = "courier_auth_token",
                     company_name = "Shims",
                     width = 200, height = 250,
@@ -31,8 +33,10 @@ __login__obj = __login__(auth_token = "courier_auth_token",
 LOGGED_IN = __login__obj.build_login_ui()
 
 def main():
+    # Define tabs and structure of the pages
     if get_logged_in_user() != 'User not logged in':
         tab0, tab1, tab2, tab3 = st.tabs(["👋🏼  Accueil", "👤  Profil", "📺  Médiathèque", "🌀  Vortex Race"])
+        # "Accueil" Page
         with tab0:
             colored_header(
                 label="Accueil",
@@ -83,6 +87,7 @@ def main():
                 if st.button("Accéder", key=3, type="primary"):
                     webbrowser.open_new_tab(url)
 
+        # "Profil" Page
         with tab1:
             colored_header(
                 label="My profil",
@@ -91,11 +96,9 @@ def main():
             )
 
             col1, col2, col3 = st.columns(3)
-
-
             username = get_logged_in_user()
 
-            # checks if the key "profile_done" exists and is false. if yes (exists and false), it indicates it to the user
+            # Checks if the key "profile_done" exists and is false. if yes (exists and false), it indicates it to the user
             # and updates it from false to true (add button and stuff)
             if check_profile_done(username):
                 update_profile(username)
@@ -124,13 +127,10 @@ def main():
                         save_profile(username, TempParticipation, TempTexteTemps3kmSplit, TempTexteTemps7kmSplit, TempObjectifDistance, TempObjectifTempsSplit, TempYoutuberFavori)
                         st.experimental_rerun()
 
-
-
-            # if the profile is fully finished, display message
+            # If the profile is fully finished, display message
             elif check_profile_done_finished(username):
                 VarParticipation, VarTemps3km, VarTemps7km, VarObjectifDistance, VarObjectifTemps, VarYoutuberFavori = get_logged_in_profile(username)
                 st.markdown("PROFILE IS DONE")
-
 
                 with col1:
                     st.subheader("Mes infos")
@@ -140,7 +140,7 @@ def main():
                     st.markdown("**Pseudo :**")
                     st.caption(username)
 
-                    # Charger les images
+                    # Charge images
                     image_path1 = os.path.abspath(
                         "./Visual/app/Avatar1.jpg")
                     image_path2 = os.path.abspath(
@@ -152,12 +152,12 @@ def main():
                     avatar2 = Image.open(image_path2)
                     avatar3 = Image.open(image_path3)
 
-                    # Créer une liste déroulante pour choisir l'avatar
+                    # List with avatars to choose
                     st.markdown("**Avatar :** ")
                     avatar_choice = st.selectbox("Choisissez votre avatar :", ["Monstracoco", "Crocorreur", "Furieur"],
                                                  format_func=lambda x: x)
 
-                    # Afficher l'avatar sélectionné
+                    # Display the selected avatar
                     if avatar_choice == "Monstracoco":
                         st.image(avatar1, caption="Monstracoco", use_column_width=True)
                     elif avatar_choice == "Crocorreur":
@@ -166,7 +166,6 @@ def main():
                         st.image(avatar3, caption="Furieur", use_column_width=True)
 
                 with col2:
-
                     st.subheader("Mes courses")
                     st.markdown("---")
                     st.markdown("**Participation :** ")
@@ -184,13 +183,14 @@ def main():
                     st.markdown("---")
                     st.markdown("**Youtubeur préféré :** ")
                     st.markdown(VarYoutuberFavori)
-                    # Afficher la liste des favoris
+
+                    # Display the list of favourites
                     mediatheque.favoris()
 
                 if st.button('Edit Profile'):
                     reset_profile(username)
 
-                # Afficher la liste des favoris
+                # Display the list of favourites
                 # mediatheque.favoris()
 
 
@@ -199,7 +199,7 @@ def main():
                 reset_profile(username)
                 st.experimental_rerun()
 
-
+        # "Médiathèque" Page
         with tab2:
             colored_header(
                 label="Médiathèque",
@@ -208,6 +208,7 @@ def main():
             )
             mediatheque.mediatheque()
 
+        # "Vortex Race" Page
         with tab3:
             colored_header(
                 label="Vortex Race",
