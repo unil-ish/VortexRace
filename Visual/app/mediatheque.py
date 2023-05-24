@@ -220,6 +220,10 @@ def favoris():
     rows = c.fetchall()
     st.markdown('**Liste des favoris :**')
 
+    # Button to refresh the page and display our new favourites
+    if st.button(f"Rafraichir mes favoris \U0001F504"):
+        st.experimental_rerun()
+
     # Display the selected videos (user's favorites)
     for i, row in enumerate(reversed(rows)):
         url = row[0]
@@ -236,7 +240,7 @@ def favoris():
             unsafe_allow_html=True)
 
         # Button to remove the video from user's favorites
-        if st.button(f"Retirer des favoris", key=f"remove-from-favorites-{i}"):
+        if st.button(f"Retirer des favoris 	\U0000274C", key=f"remove-from-favorites-{i}"):
 
             #Remove the username from the video's fav_by_list
             fav_by_list = fav_by.split(", ")
