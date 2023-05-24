@@ -31,6 +31,8 @@ def mediatheque():
     # url = st.text_input('Entrez l\'URL de la vidéo YouTube:',
     #                     on_change=clear_text_input, key="widget")
 
+    #Info message
+    st.info('ℹ️ Only Youtube videos can be added.')
     # Input asking the user to enter an url, to add the video
     url = st.text_input('Entrez l\'URL de la vidéo YouTube:')
 
