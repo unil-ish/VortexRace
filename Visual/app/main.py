@@ -8,14 +8,7 @@ from streamlit_card import card
 from streamlit_login_auth_ui.widgets import __login__
 from streamlit_extras.colored_header import colored_header
 
-#Configure the page settings
-st.set_page_config(
-    page_title="VortexRace",
-    page_icon="VortexRaceLogo.png",
-    layout="wide",
-    initial_sidebar_state="expanded",
-)
-
+#Configure the Page's Title
 st.title("Vortex Race +")
 
 #config = toml.load(".streamlit/config.toml")
