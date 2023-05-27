@@ -92,13 +92,13 @@ def main():
             username = get_logged_in_user()
 
             # Checks if the key "profile_done" exists and is false. if yes (exists and false), it indicates it to the user
-            # and updates it from false to true (add button and stuff)
+            # and updates it from false to true
             if check_profile_done(username):
-                update_profile(username)
 
+                #prevents the page from refreshing
                 with st.form(key='profile_form'):
 
-                    TempParticipation = st.text_input('Entrez la distance de votre course', key='temp_participation') # check box 3 ou/et 7,
+                    TempParticipation = st.text_input('Entrez la distance de votre course', key='temp_participation') # check box 3 ou/et 7
                     TempTemps3km = st.text_input('Entrez le temps de votre course de 3km sous le format _minute_ _secondes_', key='temp_temps_3km')
 
                     TempTemps7km = st.text_input('Entrez le temps de votre course de 7km sous le format _minute_ _secondes_', key='temp_temps_7km')
@@ -110,14 +110,8 @@ def main():
 
                     if st.form_submit_button('Sauver'):
 
-                        TempTemps3kmSplit = TempTemps3km.split()
-                        TempTexteTemps3kmSplit = f"{TempTemps3kmSplit[0]}min {TempTemps3kmSplit[1]}secondes"
-                        TempTemps7kmSplit = TempTemps7km.split()
-                        TempTexteTemps7kmSplit = f"{TempTemps7kmSplit[0]}min {TempTemps7kmSplit[1]}secondes"
-                        TempObjectifTempsSplit = TempObjectifTemps.split()
-                        TempObjectifTempsSplit = f"{TempObjectifTempsSplit[0]}min {TempObjectifTempsSplit[1]}secondes"
-
-                        save_profile(username, TempParticipation, TempTexteTemps3kmSplit, TempTexteTemps7kmSplit, TempObjectifDistance, TempObjectifTempsSplit, TempYoutuberFavori)
+                        #normally saves the inputted info into the corresponding profile
+                        save_profile(username, TempParticipation, TempTemps3km, TempTemps7km, TempObjectifDistance, TempObjectifTemps, TempYoutuberFavori)
                         st.experimental_rerun()
 
             # If the profile is fully finished, display message
@@ -266,8 +260,14 @@ def check_profile_done(username):
 
 def check_profile_done_finished(username):
     """
-    Checks whether a pair 'ProfileDone: false' exists in the dictionary corresponding to the given username in the JSON file.
+     Checks whether a pair 'ProfileDone: false' exists in the dictionary corresponding to the given username in the JSON file.
     Returns True if it exists, and False otherwise.
+
+    Args:
+        username:
+
+    Returns:
+
     """
     with open('_secret_auth_.json', 'r') as f:
         data = json.load(f)
@@ -280,21 +280,6 @@ def check_profile_done_finished(username):
                 return False
 
 
-def update_profile(username):
-    """
-    Updates the 'ProfileDone' key to 'true' for the dictionary with the specified username in the list in the JSON file.
-    """
-    with open('_secret_auth_.json', 'r') as f:
-        data = json.load(f)
-
-    # Find the dictionary with the specified username
-    for item in data:
-        if item['username'] == username:
-            item['ProfileDone'] = "true"
-            break
-
-    with open('_secret_auth_.json', 'w') as f:
-        json.dump(data, f)
 
 def reset_profile(username):
     """
@@ -318,7 +303,7 @@ def reset_profile(username):
     with open('_secret_auth_.json', 'w') as f:
         json.dump(data, f)
 
-def save_profile(username, TempParticipation, TempTexteTemps3kmSplit, TempTexteTemps7kmSplit, TempObjectifDistance, TempObjectifTempsSplit, TempYoutuberFavori):
+def save_profile(username, TempParticipation, TempTemps3km, TempTemps7km, TempObjectifDistance, TempObjectifTemps, TempYoutuberFavori):
 
     """
         Completes json with the given info. CURRENTLY NOT SAVING, NOT SURE WHY
@@ -331,10 +316,10 @@ def save_profile(username, TempParticipation, TempTexteTemps3kmSplit, TempTexteT
         if item['username'] == username:
             item['ProfileDone'] = "true"
             item['participation'] = TempParticipation
-            item['temps3kmtexte'] = TempTexteTemps3kmSplit
-            item['temps7kmtexte'] = TempTexteTemps7kmSplit
+            item['temps3kmtexte'] = TempTemps3km
+            item['temps7kmtexte'] = TempTemps7km
             item['objectifdistance'] = TempObjectifDistance
-            item['objectiftempstexte'] = TempObjectifTempsSplit
+            item['objectiftempstexte'] = TempObjectifTemps
             item['youtuberfavori'] = TempYoutuberFavori
             break
 
