@@ -8,11 +8,13 @@ from streamlit_card import card
 from streamlit_login_auth_ui.widgets import __login__
 from streamlit_extras.colored_header import colored_header
 
+st.set_page_config(
+    layout="wide",
+    initial_sidebar_state="expanded",
+)
+
 #Configure the Page's Title
 st.title("Vortex Race +")
-
-#config = toml.load(".streamlit/config.toml")
-#theme = config.get('theme', {})
 
 #Get the logged in username
 __login__obj = __login__(auth_token = "courier_auth_token",
