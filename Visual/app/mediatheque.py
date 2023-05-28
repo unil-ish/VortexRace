@@ -3,7 +3,7 @@ import sqlite3
 from pytube import YouTube
 import main
 
-#Get the logged in username
+# Get the logged in username
 username = main.get_logged_in_user()
 
 def mediatheque():
@@ -16,29 +16,10 @@ def mediatheque():
                  (url text, title text, video_id text, likes integer NOT NULL DEFAULT 0, dislikes integer NOT NULL DEFAULT 0, liked_by, disliked_by, fav_by)''')
     conn.commit()
 
-    # Essais pour vider le st.text_input afin d'eviter les doublons
-    # Enlever les "#" des ligns 36-37 39-40, puis essayer avec soit 42-43 soit 45-46 en ayant la ligne 49 en commentaire
-
-    # if "my_text_input" not in st.session_state:
-    #     st.session_state.my_text_input = ""
-    #
-    # def clear_text_input():
-    #     st.session_state.my_text_input = ""
-
-    # url = st.text_input('Entrez l\'URL de la vidéo YouTube:', value=st.session_state.my_text_input,
-    #                                  on_change=clear_text_input, key="text_input")
-
-    # url = st.text_input('Entrez l\'URL de la vidéo YouTube:',
-    #                     on_change=clear_text_input, key="widget")
-
     #Info message
     st.info(' ℹ️ Only Youtube videos can be added.')
     # Input asking the user to enter an url, to add the video
     url = st.text_input('Entrez l\'URL de la vidéo YouTube:')
-
-    #### ajouter controle pour slmt accepter youtube
-    #### ajouter plus d'etapes
-    #### utiliser st.form button pour les etapes
 
     # If url valid, extract video informations and add the video to the database
     if url:
@@ -94,12 +75,28 @@ def mediatheque():
         disliked_by = row[6]
         fav_by = row[7]
 
-        st.write(
-            f'<iframe width="560" height="315" src="https://www.youtube.com/embed/{row[2]}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>',
-            unsafe_allow_html=True)
+        # Frame code to display the video
+        iframe_code = f'<iframe width="600" height="315" src="https://www.youtube.com/embed/{row[2]}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>'
+
+        # Markdown to center the video
+        st.markdown(
+            """
+            <style>
+            .centered-content {
+                display: flex;
+                justify-content: center;
+            }
+            </style>
+            """,
+            unsafe_allow_html=True,
+        )
+
+        # Display the video (centered)
+        centered_iframe = f'<div class="centered-content">{iframe_code}</div>'
+        st.markdown(centered_iframe, unsafe_allow_html=True)
 
         # Set columns for all the buttons (that are under each video)
-        col_fav, col_like, col_dislike, col4 = st.columns([2, 2, 2, 8])
+        col1, col_fav, col_like, col_dislike, col4 = st.columns([2.7, 2, 2, 2, 1.5])
 
         # Button to add a video to user's favorites
         with col_fav:
@@ -131,7 +128,6 @@ def mediatheque():
             if result is not None:
                 likes = result[0]
                 st.write(f'Likes : {likes}')
-                st.write(f'Liked by : {liked_by}')
             if st.button(f"\U0001F44D", key=f"like-{i}"):
                 liked_by_list = liked_by.split(", ")
                 disliked_by_list = disliked_by.split(", ")
@@ -170,7 +166,6 @@ def mediatheque():
             if result is not None:
                 dislikes = result[1]
                 st.write(f'Dislikes : {dislikes}')
-                st.write(f'Disliked by : {disliked_by}')
             if st.button(f"\U0001F44E", key=f"dislike-{i}"):
                 liked_by_list = liked_by.split(", ")
                 disliked_by_list = disliked_by.split(", ")
@@ -198,14 +193,6 @@ def mediatheque():
                     disliked_by = ", ".join(disliked_by_list)
                     c.execute("UPDATE videos SET dislikes = dislikes - 1, disliked_by = ? WHERE video_id = ?", (disliked_by, video_id,))
                     conn.commit()
-                st.experimental_rerun()
-
-        with col4:
-            if st.button(f"dev-btn: Retirer video", key=f"dev-btn-{i}"):
-                # Retirer la vidéo à la liste des favoris
-                c.execute("DELETE FROM videos WHERE video_id = ?", (video_id,))
-                conn.commit()
-                # Rafraîchir la page
                 st.experimental_rerun()
 
 # Fuction to display user's favorites

@@ -17,26 +17,11 @@ utiliser pour les utilisateurs de l'application. Nous avons également utilisé 
 
 Ces importations nous ont permis d'améliorer notre site pour une meilleure expérience utilisateur.
 
-## XX
-
 ## Installation
-Pour installer et exécuter l'application Vortex Race +, suivez les étapes ci-dessous :
+Pour installer et exécuter l'application Vortex Race +, vous pouvez cloner le dépòt Github ci-dessous :
 
-1. Clonez le dépôt sur votre machine locale.
+https://github.com/dpicca/VortexRace.git
 
-git clone https://github.com/votre-utilisateur/vortex-race.git
-
-2. Accédez au répertoire du projet.
-
-cd vortex-race
-
-3. Installez les dépendances nécessaires.
-
-pip install -r xx.txt
-
-4. Lancez l'application Streamlit.
-
-streamlit run app.py
 
 ## Utilisation
 Après avoir installé et exécuté l'application Vortex Race +, vous pouvez l'utiliser selon les étapes suivantes :
