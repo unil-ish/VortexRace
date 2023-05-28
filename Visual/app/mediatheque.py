@@ -6,6 +6,7 @@ import main
 # Get the logged in username
 username = main.get_logged_in_user()
 
+
 def mediatheque():
     # Connect to the videos database
     conn = sqlite3.connect('videos.db')
@@ -13,10 +14,11 @@ def mediatheque():
 
     # Create the table to stock the videos
     c.execute('''CREATE TABLE IF NOT EXISTS videos
-                 (url text, title text, video_id text, likes integer NOT NULL DEFAULT 0, dislikes integer NOT NULL DEFAULT 0, liked_by, disliked_by, fav_by)''')
+                 (url text, title text, video_id text, likes integer NOT NULL DEFAULT 0,
+                  dislikes integer NOT NULL DEFAULT 0, liked_by, disliked_by, fav_by)''')
     conn.commit()
 
-    #Info message
+    # Info message
     st.info(' ℹ️ Only Youtube videos can be added.')
     # Input asking the user to enter an url, to add the video
     url = st.text_input('Entrez l\'URL de la vidéo YouTube:')
@@ -49,34 +51,34 @@ def mediatheque():
                 fav_by = ""
 
                 # Insert the video into the database
-                c.execute("INSERT INTO videos VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (url, title, video_id, likes, dislikes, liked_by, disliked_by, fav_by))
+                c.execute("INSERT INTO videos VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                          (url, title, video_id, likes, dislikes, liked_by, disliked_by, fav_by))
                 conn.commit()
 
             # Send an error message if the link isn't valid (not a youtube video or else...)
             except Exception as e:
                 st.write(e)
-                st.error('Une erreur est survenue lors de l\'extraction de la vidéo: Nous n\'acceptons que les vidéos Youtube. Il est possible que votre lien soit obsolète.')
+                st.error('Une erreur est survenue lors de l\'extraction de la vidéo: '
+                         'Nous n\'acceptons que les vidéos Youtube. Il est possible que votre lien soit obsolète.')
                 st.error("Si vous êtes sûr de votre lien YouTube, réessayez.")
 
     # Select all the videos and order them by ratio of likes-dislikes
-    c.execute("SELECT url, title, video_id, likes, dislikes, liked_by, disliked_by, fav_by, (likes - dislikes) AS difference FROM videos ORDER BY difference DESC ")
+    c.execute("SELECT url, title, video_id, likes, dislikes, liked_by, disliked_by, fav_by,"
+              " (likes - dislikes) AS difference FROM videos ORDER BY difference DESC ")
     rows = c.fetchall()
     st.write('### Liste des vidéos:')
 
     # Display all the videos
     for i, row in enumerate(rows):
         # Extraire les informations de la vidéo
-        url = row[0]
-        title = row[1]
         video_id = row[2]
-        likes = row[3]
-        dislikes = row[4]
         liked_by = row[5]
         disliked_by = row[6]
         fav_by = row[7]
 
         # Frame code to display the video
-        iframe_code = f'<iframe width="560" height="315" src="https://www.youtube.com/embed/{row[2]}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>'
+        iframe_code = f'<iframe width="560" height="315" src="https://www.youtube.com/embed/{row[2]}"' \
+                      f' frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>'
 
         # Markdown to center the video
         st.markdown(
@@ -138,7 +140,8 @@ def mediatheque():
                     liked_by = ", ".join(liked_by_list)
 
                     # Update the database with the updated likes and liked_by_list
-                    c.execute("UPDATE videos SET likes = likes + 1, liked_by = ? WHERE video_id = ?", (liked_by, video_id,))
+                    c.execute("UPDATE videos SET likes = likes + 1, liked_by = ? WHERE video_id = ?",
+                              (liked_by, video_id,))
                     conn.commit()
 
                     # If username had disliked this video, remove him from disliked_by_list (can either like or dislike)
@@ -153,7 +156,8 @@ def mediatheque():
                 else:
                     liked_by_list.remove(username)
                     liked_by = ", ".join(liked_by_list)
-                    c.execute("UPDATE videos SET likes = likes - 1, liked_by = ? WHERE video_id = ?", (liked_by, video_id,))
+                    c.execute("UPDATE videos SET likes = likes - 1, liked_by = ? WHERE video_id = ?",
+                              (liked_by, video_id,))
                     conn.commit()
                 st.experimental_rerun()
 
@@ -176,7 +180,8 @@ def mediatheque():
                     disliked_by = ", ".join(disliked_by_list)
 
                     # Update the database with the updated dislikes and disliked_by_list
-                    c.execute("UPDATE videos SET dislikes = dislikes + 1, disliked_by = ? WHERE video_id = ?", (disliked_by, video_id,))
+                    c.execute("UPDATE videos SET dislikes = dislikes + 1, disliked_by = ? WHERE video_id = ?",
+                              (disliked_by, video_id,))
                     conn.commit()
 
                     # If username had liked this video, remove him from liked_by_list (can either like or dislike)
@@ -187,13 +192,15 @@ def mediatheque():
                                   (liked_by, video_id,))
                         conn.commit()
 
-                # Remove the dislike if user already disliked this video, remove him from disliked_by_list and decrement dislikes
+                # Remove the dislike if user already disliked this video
                 else:
                     disliked_by_list.remove(username)
                     disliked_by = ", ".join(disliked_by_list)
-                    c.execute("UPDATE videos SET dislikes = dislikes - 1, disliked_by = ? WHERE video_id = ?", (disliked_by, video_id,))
+                    c.execute("UPDATE videos SET dislikes = dislikes - 1, disliked_by = ? WHERE video_id = ?",
+                              (disliked_by, video_id,))
                     conn.commit()
                 st.experimental_rerun()
+
 
 # Fuction to display user's favorites
 def favoris():
@@ -213,23 +220,18 @@ def favoris():
 
     # Display the selected videos (user's favorites)
     for i, row in enumerate(reversed(rows)):
-        url = row[0]
-        title = row[1]
         video_id = row[2]
-        likes = row[3]
-        dislikes = row[4]
-        liked_by = row[5]
-        disliked_by = row[6]
         fav_by = row[7]
 
         st.write(
-            f'<iframe width="560" height="315" src="https://www.youtube.com/embed/{row[2]}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>',
+            f'<iframe width="560" height="315" src="https://www.youtube.com/embed/{row[2]}"'
+            f' frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>',
             unsafe_allow_html=True)
 
         # Button to remove the video from user's favorites
         if st.button(f"Retirer des favoris 	\U0000274C", key=f"remove-from-favorites-{i}"):
 
-            #Remove the username from the video's fav_by_list
+            # Remove the username from the video's fav_by_list
             fav_by_list = fav_by.split(", ")
             fav_by_list.remove(username)
             fav_by = ", ".join(fav_by_list)
