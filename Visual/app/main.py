@@ -106,8 +106,7 @@ def main():
 
                     TempTempsCourse = st.text_input('Entrez le temps de votre course', key='temp_temps_course')
 
-                    TempObjectifDistance = st.text_input('Entrez votre objectif de course en distance', key='temp_objectif_distance')
-                    TempObjectifTemps = st.text_input('Entrez votre objectif de course en temps', key='temp_objectif_temps')
+                    TempObjectifTemps = st.text_input('Entrez vos objectifs pour la prochaine édition', key='temp_objectif_temps')
 
                     TempYoutuberFavori = st.text_input('Entrez votre Youtuber favori', key='temp_youtuber_favori')
 
@@ -119,12 +118,12 @@ def main():
                     if st.form_submit_button('Sauver'):
 
                         #normally saves the inputted info into the corresponding profile
-                        save_profile(username, TempParticipation, TempTempsCourse, TempObjectifDistance, TempObjectifTemps, TempYoutuberFavori, TempAvatar)
+                        save_profile(username, TempParticipation, TempTempsCourse, TempObjectifTemps, TempYoutuberFavori, TempAvatar)
                         st.experimental_rerun()
 
             # If the profile is fully finished, display message
             elif check_profile_done_finished(username):
-                VarParticipation, VarTempsCourse, VarObjectifDistance, VarObjectifTemps, VarYoutuberFavori, VarAvatar = get_logged_in_profile(username)
+                VarParticipation, VarTempsCourse, VarObjectifTemps, VarYoutuberFavori, VarAvatar = get_logged_in_profile(username)
 
                 with col1:
                     st.subheader("Mes infos")
@@ -167,7 +166,6 @@ def main():
                     st.markdown("**Temps:** ")
                     st.markdown(VarTempsCourse)
                     st.markdown("**Pour la prochaine édition, mes objectifs sont :**")
-                    st.markdown(VarObjectifDistance)
                     st.markdown(VarObjectifTemps)
 
                 with col3:
@@ -298,7 +296,6 @@ def reset_profile(username):
             item['ProfileDone'] = "false"
             item['participation'] = ""
             item['tempstexte'] = [""]
-            item['objectifdistance'] = ""
             item['objectiftempstexte'] = ""
             item['youtuberfavori'] = ""
             item['avatar'] = ""
@@ -307,11 +304,23 @@ def reset_profile(username):
     with open('_secret_auth_.json', 'w') as f:
         json.dump(data, f)
 
-def save_profile(username, TempParticipation, TempTempsCourse, TempObjectifDistance, TempObjectifTemps, TempYoutuberFavori, TempAvatar):
+def save_profile(username, TempParticipation, TempTempsCourse, TempObjectifTemps, TempYoutuberFavori, TempAvatar):
 
     """
-        Completes json with the given info. CURRENTLY NOT SAVING, NOT SURE WHY
-        """
+
+    Completes json with the given info
+
+    Args:
+        username: (int)
+        TempParticipation: (int, optional)
+        TempTempsCourse: (int, optional)
+        TempObjectifTemps: (int, optional)
+        TempYoutuberFavori: (int, optional)
+        TempAvatar:  (int, optional)
+
+    Returns:
+
+    """
     with open('_secret_auth_.json', 'r') as f:
         data = json.load(f)
 
@@ -321,7 +330,6 @@ def save_profile(username, TempParticipation, TempTempsCourse, TempObjectifDista
             item['ProfileDone'] = "true"
             item['participation'] = TempParticipation
             item['tempstexte'] = TempTempsCourse
-            item['objectifdistance'] = TempObjectifDistance
             item['objectiftempstexte'] = TempObjectifTemps
             item['youtuberfavori'] = TempYoutuberFavori
             item['avatar'] = TempAvatar
@@ -342,11 +350,10 @@ def get_logged_in_profile(username):
         if user['username'] == username:
             VarParticipation = user['participation']
             VarTempsCourse = user['tempstexte']
-            VarObjectifDistance = user['objectifdistance']
             VarObjectifTemps = user['objectiftempstexte']
             VarYoutuberFavori = user['youtuberfavori']
             VarAvatar = user['avatar']
-            return VarParticipation, VarTempsCourse, VarObjectifDistance, VarObjectifTemps, VarYoutuberFavori, VarAvatar
+            return VarParticipation, VarTempsCourse, VarObjectifTemps, VarYoutuberFavori, VarAvatar
 
 
 if __name__ == '__main__':
