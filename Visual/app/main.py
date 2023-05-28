@@ -13,16 +13,15 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-#Configure the Page's Title
+# Configure the Page's Title
 st.title("Vortex Race +")
 
-#Get the logged in username
+# Get the logged in username
 __login__obj = __login__(auth_token = "courier_auth_token",
                     company_name = "Shims",
                     width = 200, height = 250,
                     logout_button_name = 'Logout', hide_menu_bool = False,
                     hide_footer_bool = False,
-                    #lottie_url = 'https://assets8.lottiefiles.com/packages/lf20_ktwnwv5m.json'
                     )
 
 LOGGED_IN = __login__obj.build_login_ui()
