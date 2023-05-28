@@ -22,7 +22,6 @@ Pour installer et exécuter l'application Vortex Race +, vous pouvez cloner le d
 
 https://github.com/dpicca/VortexRace.git
 
-
 ## Utilisation
 Après avoir installé et exécuté l'application Vortex Race +, vous pouvez l'utiliser selon les étapes suivantes :
 
