@@ -33,9 +33,6 @@ Après avoir installé et exécuté l'application Vortex Race +, vous pouvez l'u
 - Elijah Green
 - Thomas Rywalski
 
-## Mainteneur
-Davide Picca
-Email : Davide.Picca@unil.ch
 
 ## Informations supplémentaires
 Vortex Race + s'inscrit dans le cadre du cours de développement logiciel donné par Monsieur Davide Picca qui s'est déroulé 
