@@ -28,6 +28,12 @@ __login__obj = __login__(auth_token = "courier_auth_token",
 LOGGED_IN = __login__obj.build_login_ui()
 
 def main():
+    """
+    Main function, displays the entire application. Displays the homepage, profile, video library, and the "About" page.
+
+    Returns:
+        None
+    """
     # Define tabs and structure of the pages
     if get_logged_in_user() != 'User not logged in':
         tab0, tab1, tab2, tab3 = st.tabs(["👋🏼  Accueil", "👤  Profil", "📺  Médiathèque", "🌀  Vortex Race"])
