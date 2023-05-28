@@ -62,6 +62,7 @@ def mediatheque():
                 c.execute("INSERT INTO videos VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
                           (url, title, video_id, likes, dislikes, liked_by, disliked_by, fav_by))
                 conn.commit()
+                st.success("**La vidéo a bien été publiée!**")
 
             # Send an error message if the link isn't valid (not a youtube video or else...)
             except Exception as e:
