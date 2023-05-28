@@ -115,7 +115,6 @@ def main():
                     TempAvatar = st.selectbox("Choisissez votre avatar :", ["Monstracoco", "Crocorreur", "Furieur"],
                                                  format_func=lambda x: x)
 
-                    st.markdown("profile is not done")
 
                     if st.form_submit_button('Sauver'):
 
@@ -126,7 +125,6 @@ def main():
             # If the profile is fully finished, display message
             elif check_profile_done_finished(username):
                 VarParticipation, VarTempsCourse, VarObjectifDistance, VarObjectifTemps, VarYoutuberFavori, VarAvatar = get_logged_in_profile(username)
-                st.markdown("PROFILE IS DONE")
 
                 with col1:
                     st.subheader("Mes infos")
@@ -158,6 +156,9 @@ def main():
                     elif VarAvatar == "Furieur":
                         st.image(avatar3, caption="Furieur", use_column_width=True)
 
+                    if st.button('Edit Profile'):
+                        reset_profile(username)
+
                 with col2:
                     st.subheader("Mes courses")
                     st.markdown("---")
@@ -178,8 +179,7 @@ def main():
                     # Display the list of favourites
                     mediatheque.favoris()
 
-                if st.button('Edit Profile'):
-                    reset_profile(username)
+
 
                 # Display the list of favourites
                 # mediatheque.favoris()
