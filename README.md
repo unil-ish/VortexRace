@@ -1,6 +1,6 @@
 # Vortex Race +
 Vortex Race + est une application web qui permet aux utilisateurs de rassembler toutes les vidéos qui les 
-intéressent pour leurs entraînements, de consulter rapidement leurs statistiques de course personnelles et d'accéder 
+intéressent pour leurs entraînements, de consulter rapidement leurs dernières performances personnelles et d'accéder 
 en un clic au site web officiel de la Vortex Race.
 
 ## Technologies utilisées
@@ -29,13 +29,11 @@ Après avoir installé et exécuté l'application Vortex Race +, vous pouvez l'u
 2. Profitez de chaque tab pour accéder aux fonctions de notre web app.
 
 ## Auteurs
-
 - Antoine Vigand
 - Elijah Green
 - Thomas Rywalski
 
 ## Mainteneur
-
 Davide Picca
 Email : Davide.Picca@unil.ch
 
