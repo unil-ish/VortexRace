@@ -1,0 +1,8 @@
+[theme]
+base="dark"
+primaryColor="#60aef4"
+font="sans serif"
+
+[browser]
+title = "VortexRace+"
+icon = "Visual/app/VortexRaceLogo.png"
