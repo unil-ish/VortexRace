@@ -100,25 +100,32 @@ def main():
                 #prevents the page from refreshing
                 with st.form(key='profile_form'):
 
-                    TempParticipation = st.text_input('Entrez la distance de votre course', key='temp_participation') # check box 3 ou/et 7
-                    TempTemps3km = st.text_input('Entrez le temps de votre course de 3km sous le format _minute_ _secondes_', key='temp_temps_3km')
+                    # TempParticipation = st.text_input('Entrez la distance de votre course', key='temp_participation') # check box 3 ou/et 7
 
-                    TempTemps7km = st.text_input('Entrez le temps de votre course de 7km sous le format _minute_ _secondes_', key='temp_temps_7km')
+                    TempParticipation = st.selectbox('Entrez la distance de votre course', ["3km", "7km"])
+
+                    TempTempsCourse = st.text_input('Entrez le temps de votre course', key='temp_temps_course')
+
                     TempObjectifDistance = st.text_input('Entrez votre objectif de course en distance', key='temp_objectif_distance')
-                    TempObjectifTemps = st.text_input('Entrez votre objectif de course en temps sous le format _minute_ _secondes_', key='temp_objectif_temps')
+                    TempObjectifTemps = st.text_input('Entrez votre objectif de course en temps', key='temp_objectif_temps')
 
                     TempYoutuberFavori = st.text_input('Entrez votre Youtuber favori', key='temp_youtuber_favori')
+
+
+                    TempAvatar = st.selectbox("Choisissez votre avatar :", ["Monstracoco", "Crocorreur", "Furieur"],
+                                                 format_func=lambda x: x)
+
                     st.markdown("profile is not done")
 
                     if st.form_submit_button('Sauver'):
 
                         #normally saves the inputted info into the corresponding profile
-                        save_profile(username, TempParticipation, TempTemps3km, TempTemps7km, TempObjectifDistance, TempObjectifTemps, TempYoutuberFavori)
+                        save_profile(username, TempParticipation, TempTempsCourse, TempObjectifDistance, TempObjectifTemps, TempYoutuberFavori, TempAvatar)
                         st.experimental_rerun()
 
             # If the profile is fully finished, display message
             elif check_profile_done_finished(username):
-                VarParticipation, VarTemps3km, VarTemps7km, VarObjectifDistance, VarObjectifTemps, VarYoutuberFavori = get_logged_in_profile(username)
+                VarParticipation, VarTempsCourse, VarObjectifDistance, VarObjectifTemps, VarYoutuberFavori, VarAvatar = get_logged_in_profile(username)
                 st.markdown("PROFILE IS DONE")
 
                 with col1:
@@ -141,17 +148,14 @@ def main():
                     avatar2 = Image.open(image_path2)
                     avatar3 = Image.open(image_path3)
 
-                    # List with avatars to choose
-                    st.markdown("**Avatar :** ")
-                    avatar_choice = st.selectbox("Choisissez votre avatar :", ["Monstracoco", "Crocorreur", "Furieur"],
-                                                 format_func=lambda x: x)
+
 
                     # Display the selected avatar
-                    if avatar_choice == "Monstracoco":
+                    if VarAvatar == "Monstracoco":
                         st.image(avatar1, caption="Monstracoco", use_column_width=True)
-                    elif avatar_choice == "Crocorreur":
+                    elif VarAvatar == "Crocorreur":
                         st.image(avatar2, caption="Crocorreur", use_column_width=True)
-                    elif avatar_choice == "Furieur":
+                    elif VarAvatar == "Furieur":
                         st.image(avatar3, caption="Furieur", use_column_width=True)
 
                 with col2:
@@ -159,10 +163,8 @@ def main():
                     st.markdown("---")
                     st.markdown("**Participation :** ")
                     st.markdown(VarParticipation)
-                    st.markdown("**Temps 3km:** ")
-                    st.markdown(VarTemps3km)
-                    st.markdown("**Temps 7km:** ")
-                    st.markdown(VarTemps7km)
+                    st.markdown("**Temps:** ")
+                    st.markdown(VarTempsCourse)
                     st.markdown("**Pour la prochaine édition, mes objectifs sont :**")
                     st.markdown(VarObjectifDistance)
                     st.markdown(VarObjectifTemps)
@@ -295,17 +297,17 @@ def reset_profile(username):
         if item['username'] == username:
             item['ProfileDone'] = "false"
             item['participation'] = ""
-            item['temps3kmtexte'] = ["",""]
-            item['temps7kmtexte'] = ""
+            item['tempstexte'] = [""]
             item['objectifdistance'] = ""
             item['objectiftempstexte'] = ""
             item['youtuberfavori'] = ""
+            item['avatar'] = ""
             break
 
     with open('_secret_auth_.json', 'w') as f:
         json.dump(data, f)
 
-def save_profile(username, TempParticipation, TempTemps3km, TempTemps7km, TempObjectifDistance, TempObjectifTemps, TempYoutuberFavori):
+def save_profile(username, TempParticipation, TempTempsCourse, TempObjectifDistance, TempObjectifTemps, TempYoutuberFavori, TempAvatar):
 
     """
         Completes json with the given info. CURRENTLY NOT SAVING, NOT SURE WHY
@@ -318,11 +320,11 @@ def save_profile(username, TempParticipation, TempTemps3km, TempTemps7km, TempOb
         if item['username'] == username:
             item['ProfileDone'] = "true"
             item['participation'] = TempParticipation
-            item['temps3kmtexte'] = TempTemps3km
-            item['temps7kmtexte'] = TempTemps7km
+            item['tempstexte'] = TempTempsCourse
             item['objectifdistance'] = TempObjectifDistance
             item['objectiftempstexte'] = TempObjectifTemps
             item['youtuberfavori'] = TempYoutuberFavori
+            item['avatar'] = TempAvatar
             break
 
     with open('_secret_auth_.json', 'w') as f:
@@ -339,12 +341,12 @@ def get_logged_in_profile(username):
     for user in data:
         if user['username'] == username:
             VarParticipation = user['participation']
-            VarTemps3km = user['temps3kmtexte']
-            VarTemps7km = user['temps7kmtexte']
+            VarTempsCourse = user['tempstexte']
             VarObjectifDistance = user['objectifdistance']
             VarObjectifTemps = user['objectiftempstexte']
             VarYoutuberFavori = user['youtuberfavori']
-            return VarParticipation, VarTemps3km, VarTemps7km, VarObjectifDistance, VarObjectifTemps, VarYoutuberFavori
+            VarAvatar = user['avatar']
+            return VarParticipation, VarTempsCourse, VarObjectifDistance, VarObjectifTemps, VarYoutuberFavori, VarAvatar
 
 
 if __name__ == '__main__':
