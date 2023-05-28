@@ -8,6 +8,14 @@ username = main.get_logged_in_user()
 
 
 def mediatheque():
+    """
+    Ask the user to enter a YouTube url video, add this video to the database and display it on our webapp.
+    Each video can be liked and disliked, and all the videos are order based to their likes-dislikes ratio.
+    Each video can be added to the user's favorites.
+
+    Returns:
+        None
+    """
     # Connect to the videos database
     conn = sqlite3.connect('videos.db')
     c = conn.cursor()
@@ -54,6 +62,7 @@ def mediatheque():
                 c.execute("INSERT INTO videos VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
                           (url, title, video_id, likes, dislikes, liked_by, disliked_by, fav_by))
                 conn.commit()
+                st.success("**La vidéo a bien été publiée!**")
 
             # Send an error message if the link isn't valid (not a youtube video or else...)
             except Exception as e:
@@ -204,6 +213,13 @@ def mediatheque():
 
 # Fuction to display user's favorites
 def favoris():
+    """
+    When the user add a video to his favorites, display it on his profil page.
+    Each video can be removed from his favorites.
+
+    Returns:
+        None
+    """
     conn = sqlite3.connect("videos.db")
     c = conn.cursor()
 

@@ -28,6 +28,12 @@ __login__obj = __login__(auth_token = "courier_auth_token",
 LOGGED_IN = __login__obj.build_login_ui()
 
 def main():
+    """
+    Main function, displays the entire application. Displays the homepage, profile, video library, and the "About" page.
+
+    Returns:
+        None
+    """
     # Define tabs and structure of the pages
     if get_logged_in_user() != 'User not logged in':
         tab0, tab1, tab2, tab3 = st.tabs(["👋🏼  Accueil", "👤  Profil", "📺  Médiathèque", "🌀  Vortex Race"])
@@ -228,6 +234,16 @@ def main():
         st.warning('Please login first')
 
 def get_logged_in_user():
+    """
+    Retrieves the username of the currently logged-in user after parsing the cookies.
+
+    Returns:
+        str: The username of the currently logged-in user.
+
+    Raises:
+        None
+    """
+
     if LOGGED_IN:
         fetched_cookies = __login__obj.cookies
         if '__streamlit_login_signup_ui_username__' in fetched_cookies.keys():
@@ -239,17 +255,37 @@ def get_logged_in_user():
         return "User not logged in"
 
 def get_logged_in_name(username):
+    """
+    Retrieves the name of the currently logged-in user after parsing the JSON.
+
+    Args:
+        username (str): The username of the logged-in user.
+
+    Returns:
+        str: The name of the currently logged-in user.
+    """
+
     with open('_secret_auth_.json', 'r') as f:
         data = json.load(f)
+
     for user in data:
         if user['username'] == username:
             return user["name"]
 
 def check_profile_done(username):
     """
-    Checks whether a pair 'ProfileDone: false' exists in the dictionary corresponding to the given username in the JSON file.
+    Checks whether a pair 'ProfileDone: "false"' exists in the dictionary corresponding to the given username in the JSON file.
     Returns True if it exists, and False otherwise.
+
+
+    Args:
+        username (str): The username of the logged-in user.
+
+    Returns:
+        bool: True if the pair 'ProfileDone: false' exists in the dictionary for the given username.
+              False otherwise.
     """
+
     with open('_secret_auth_.json', 'r') as f:
         data = json.load(f)
 
@@ -262,15 +298,17 @@ def check_profile_done(username):
 
 def check_profile_done_finished(username):
     """
-     Checks whether a pair 'ProfileDone: false' exists in the dictionary corresponding to the given username in the JSON file.
+    Checks whether a pair 'ProfileDone: "true"' exists in the dictionary corresponding to the given username in the JSON file.
     Returns True if it exists, and False otherwise.
 
     Args:
-        username:
+        username (str): The username of the logged-in user.
 
     Returns:
-
+        bool: True if the pair 'ProfileDone: "true"' exists in the dictionary for the given username.
+              False otherwise.
     """
+
     with open('_secret_auth_.json', 'r') as f:
         data = json.load(f)
 
@@ -285,8 +323,15 @@ def check_profile_done_finished(username):
 
 def reset_profile(username):
     """
-        Adds or resets fields to the given username in the JSON file, and adds the "profiledone" check
-        """
+    Adds or resets fields to the given username in the JSON file, and adds the "profiledone" check
+
+    Args:
+        username (str): The username of the logged-in user.
+
+    Returns:
+        None
+    """
+
     with open('_secret_auth_.json', 'r') as f:
         data = json.load(f)
 
@@ -307,20 +352,19 @@ def reset_profile(username):
 def save_profile(username, TempParticipation, TempTempsCourse, TempObjectifTemps, TempYoutuberFavori, TempAvatar):
 
     """
-
-    Completes json with the given info
+    Saves the inputted info in the JSON file under the correct username
 
     Args:
-        username: (int)
-        TempParticipation: (int, optional)
-        TempTempsCourse: (int, optional)
-        TempObjectifTemps: (int, optional)
-        TempYoutuberFavori: (int, optional)
-        TempAvatar:  (int, optional)
-
+        username (str): The username of the logged-in user.
+        TempParticipation (str, optional): The inputted participation distance.
+        TempTempsCourse (str, optional): The inputted time for the race
+        TempObjectifTemps (str, optional): The inputted objectives for the next iteration
+        TempYoutuberFavori (str, optional): The inputted favorite youtuber
+        TempAvatar (str, optional): The inputted avatar
     Returns:
-
+        None
     """
+
     with open('_secret_auth_.json', 'r') as f:
         data = json.load(f)
 
@@ -342,8 +386,19 @@ def save_profile(username, TempParticipation, TempTempsCourse, TempObjectifTemps
 
 def get_logged_in_profile(username):
     """
-    Displays the information on the profile (works if json is modified by hand)
+    After parsing the JSON file, displays the inputted  information on the profile
+    Args:
+        username (str): The username of the logged-in user.
+
+    Returns:
+        tuple: A tuple containing the following profile information:
+               - VarParticipation (str): The user's participation distance.
+               - VarTempsCourse (str): The user's time for the race.
+               - VarObjectifTemps (str): The user's goals for the next iteration.
+               - VarYoutuberFavori (str): The user's favorite YouTuber.
+               - VarAvatar (str): The avatar information of the user.
     """
+
     with open('_secret_auth_.json', 'r') as f:
         data = json.load(f)
     for user in data:
