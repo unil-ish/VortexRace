@@ -76,7 +76,7 @@ def mediatheque():
         fav_by = row[7]
 
         # Frame code to display the video
-        iframe_code = f'<iframe width="560" height="315" src="https://www.youtube.com/embed/{row[2]}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>'
+        iframe_code = f'<iframe width="600" height="315" src="https://www.youtube.com/embed/{row[2]}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>'
 
         # Markdown to center the video
         st.markdown(
@@ -96,7 +96,7 @@ def mediatheque():
         st.markdown(centered_iframe, unsafe_allow_html=True)
 
         # Set columns for all the buttons (that are under each video)
-        col1, col_fav, col_like, col_dislike, col4 = st.columns([2, 2, 2, 2, 1])
+        col1, col_fav, col_like, col_dislike, col4 = st.columns([2.7, 2, 2, 2, 1.5])
 
         # Button to add a video to user's favorites
         with col_fav:
